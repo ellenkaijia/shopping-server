@@ -108,16 +108,16 @@
 			});
 		</script>
 		<div class="row category">
-			<a href="/m_search/list?param.hot='Y'" class="col-xs-3"> <img
+			<a href="<%= basePath%>/getHot" class="col-xs-3"> <img
 				class="img-responsive" src="image/m-index_12.png">
 				<h4>热门</h4>
-			</a> <a href="/m_search/list?param.commend='Y'" class="col-xs-3"> <img
+			</a> <a href="<%= basePath%>/getNew" class="col-xs-3"> <img
 				class="img-responsive" src="image/m-index_14.png">
-				<h4>精品</h4>
+				<h4>新品</h4>
 			</a> <a href="/theme/allThemes" class="col-xs-3"> <img
 				class="img-responsive" src="image/m-index_22.png">
 				<h4>专题列表</h4>
-			</a> <a href="/brand" class="col-xs-3"> <img class="img-responsive"
+			</a> <a href="<%= basePath%>/getBand" class="col-xs-3"> <img class="img-responsive"
 				src="image/m-index_26.png">
 				<h4>品牌</h4>
 			</a>
@@ -129,7 +129,7 @@
 			<div class="tb_box">
 				<h2 class="tab_tit">
 					<a class="more"
-						href="http://m.legendshop.cn/m_search/list?categoryId=36">更多</a>
+						href="">更多</a>
 					1F 电视区
 				</h2>
 

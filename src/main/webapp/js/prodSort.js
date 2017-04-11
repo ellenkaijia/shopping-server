@@ -3,7 +3,7 @@ jQuery(document).ready(function() {
 	sendData();//一过来就调用
 	
 	$(window).scroll(function(){
-		if($(this).scrollTop()>300){
+		if($(this).scrollTop()>30){
 			$(".fanhui_cou").fadeIn(1500);
 			
 		}else{
@@ -17,19 +17,20 @@ jQuery(document).ready(function() {
 	});
 	
 	$(window).scroll(function(){
-        if ($(document).height() - $(this).scrollTop() - $(this).height()<50){
-
+        if ($(document).height() - $(this).scrollTop() - $(this).height()<10){
         	var curPageNo = $("#curPageNO").val();
         	if(isBlank(curPageNo) || curPageNo == 0){
-        		curPageNo = 1;
+        		curPageNo = 0;
         	}
-        	
         	curPageNo=parseInt(curPageNo)+1;
-			var totalPage=parseInt($("#ListTotal").val());
-			if(curPageNo<=totalPage){
+			var totalPage=parseInt($("#ListTotallist").val());
+			console.log("ListTotal",totalPage);
+			if(curPageNo <= totalPage){
 				$("#curPageNO").val(curPageNo);
 				appendData();
+				return;
 			}
+			$("#ajax_none").show();
         }
     });
 	
@@ -85,7 +86,7 @@ jQuery(document).ready(function() {
 				$(iElement).attr("class","icon_sort_up");
 			}
 		} else if (id == 'default') {
-			orderDir = "recDate,desc";
+			orderDir = "date,desc";
 		}
 		
 		$(this).siblings().find("i").attr("class","icon_sort");
@@ -101,11 +102,13 @@ jQuery(document).ready(function() {
 });
 
 function sendData(){
-	/*$('#ajax_loading').show();
+	
+	$("#container").html(""); 
+	$('#ajax_loading').show();
 	$("#list_form").ajaxForm().ajaxSubmit({
 		  success:function(result) {
 			 $('#ajax_loading').hide();
-			 $("#container").html(result); 
+			 handleJsonOverRide(result);
 		   },
 		   error:function(XMLHttpRequest, textStatus,errorThrown) {
 			 $("#container").html(""); 
@@ -113,20 +116,54 @@ function sendData(){
 			 floatNotify.simple("查找失败");
 			 return false;
 		  }	
-	})*/
+	})
 }
 
+function handleJsonOverRide(result) {
+	var htmlstring = "";
+	for(var i=0; i < result.length; i++) {
+	    htmlstring += "<a href=\"/shopping-server/product/view/"+ result[i].prodId +"\">";
+		htmlstring += "<div class=\"hproduct clearfix\" style=\"background: #fff; border-top: 0px;\">";
+		htmlstring += "<div class=\"p-pic\"> <img style=\"max-height: 100px; margin: auto;\" class=\"img-responsive\"";
+		htmlstring += "src=\"" + result[i].imgUrls[0] + "\">";
+		htmlstring += "</div><div class=\"p-info\"><p class=\"p-title\">" + result[i].prodName + "</p> <p class=\"p-origin\">";
+		htmlstring += "<em class=\"price\"> ￥"+ result[i].prodPrize + "</em>	</p>";
+		htmlstring += "<p class=\"p-title\" style=\"color:blue\">" + result[i].prodDetail + "</p>";
+		htmlstring += "</div></div></a>";
+	}
+	 $("#container").html(htmlstring); 
+	 console.log("container",result[0].listTotal);
+	 $("#ListTotallist").attr("value",result[0].listTotal);
+	 $("#orders").val(result[0].orders);
+}
+
+function handleJsonAppend(result) {
+	var htmlstring = "";
+	for(var i=0; i < result.length; i++) {
+	    htmlstring += "<a href=\"/shopping-server/product/view/"+ result[i].prodId +"\">";
+		htmlstring += "<div class=\"hproduct clearfix\" style=\"background: #fff; border-top: 0px;\">";
+		htmlstring += "<div class=\"p-pic\"> <img style=\"max-height: 100px; margin: auto;\" class=\"img-responsive\"";
+		htmlstring += "src=\"" + result[i].imgUrls[0] + "\">";
+		htmlstring += "</div><div class=\"p-info\"><p class=\"p-title\">" + result[i].prodName + "</p> <p class=\"p-origin\">";
+		htmlstring += "<em class=\"price\"> ￥"+ result[i].prodPrize + "</em>	</p>";
+		htmlstring += "<p class=\"p-title\" style=\"color:blue\">" + result[i].prodDetail + "</p>";
+		htmlstring += "</div></div></a>";
+	}
+	
+	 $("#container").append(htmlstring); 
+}
+			
 function appendData(){
+	console.log("dsadsa","append")
 	$('#ajax_loading').show();
 	$("#list_form").ajaxForm().ajaxSubmit({
 		  success:function(result) {
 			 $('#ajax_loading').hide();
-			 $("#container").append(result); 
+			 handleJsonAppend(result);
 		   },
 		   error:function(XMLHttpRequest, textStatus,errorThrown) {
-			 $("#container").html(""); 
 			 $('#ajax_loading').hide();
-			 floatNotify.simple("查找失败");
+			 floatNotify.simple("拉取查找失败");
 			 return false;
 		  }	
 	});

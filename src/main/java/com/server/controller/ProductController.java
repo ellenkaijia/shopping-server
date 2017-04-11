@@ -1,13 +1,17 @@
 package com.server.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.server.dto.SCurentPageDTO;
 import com.server.dto.SProductLevelDTO;
 import com.server.rpc.SProductMsService;
 
@@ -35,12 +39,21 @@ public class ProductController {
 		return modelAndView;
 	}
 	
-	@RequestMapping("/getHot")
-	public ModelAndView getProductHot(ModelAndView modelAndView) {
-		
-		logger.info("***********获取热门商品************");
-		
-		return modelAndView;
-		
+	@RequestMapping("/getHotList")
+	@ResponseBody
+	public List<SProductLevelDTO> getProductHotList(SCurentPageDTO sCurentPageDTO) {
+		logger.info("***********获取热门商品列表************");
+		logger.info("--------" + sCurentPageDTO.getOrders());
+		List<SProductLevelDTO> list = spProductMsService.getProductHot(sCurentPageDTO);
+		return list;
+	}
+	
+	@RequestMapping("/getNewList")
+	@ResponseBody
+	public List<SProductLevelDTO> getProductNewList(SCurentPageDTO sCurentPageDTO) {
+		logger.info("***********获取新品商品列表************");
+		logger.info("--------" + sCurentPageDTO.getOrders());
+		List<SProductLevelDTO> list = spProductMsService.getProductNew(sCurentPageDTO);
+		return list;
 	}
 }

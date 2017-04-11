@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,6 +55,22 @@ public class IndexResController {
 		
 		modelAndView.setViewName("/admin/category");
 		return modelAndView;
+	}
+	
+	@RequestMapping("/getHot")
+	public ModelAndView getProductHot(ModelAndView modelAndView) {
+		modelAndView.setViewName("/admin/category_list");
+		modelAndView.addObject("whatCode", "getHotList");
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping("/getNew")
+	public ModelAndView getProductNew(ModelAndView modelAndView) {
+		modelAndView.setViewName("/admin/category_list");
+		modelAndView.addObject("whatCode", "getNewList");
+		return modelAndView;
+		
 	}
 	
 	@RequestMapping("/shopcart")

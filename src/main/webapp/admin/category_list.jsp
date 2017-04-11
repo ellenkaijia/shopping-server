@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"
+	scope="session" />
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -57,9 +65,9 @@
 					</a></li>
 				</div>
 			</ul>
-
+            <input type="hidden" id="ListTotallist" value="1">
 			<div class="item-list" id="container" rel="2" status="0">
-				<input type="hidden" id="ListTotal" value="1"> <a
+				 <a
 					href="views.html">
 					<div class="hproduct clearfix"
 						style="background: #fff; border-top: 0px;">
@@ -78,127 +86,7 @@
 							</p>
 						</div>
 					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/83baf5bf-92df-4d85-b504-3dda879c84d7.png">
-						</div>
-						<div class="p-info">
-							<p class="p-title">臭东西</p>
-							<p class="p-origin">
-								<em class="price">¥12.00</em>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/f3e8ccfb-2827-43ad-80a4-b59d3a2d406d.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">四喜丸子</p>
-							<p class="p-origin">
-								<em class="price">¥10.00</em>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/ee3aac6b-26a0-41bb-8e24-897d522e8412.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">aza阿札2015秋冬新款潮流女包 个性嘴唇印花时尚短款女士钱包1515</p>
-							<p class="p-origin">
-								<em class="price">¥138.00</em>
-							</p>
-							<p class="mb0">
-								<del class="old-price">¥238.00</del>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/419da357-1a5e-4191-8652-fa9f73579824.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">奈思堡特价新款 包包时尚女包手包女牛皮小包女式手拿包斜跨包</p>
-							<p class="p-origin">
-								<em class="price">¥119.00</em>
-							</p>
-							<p class="mb0">
-								<del class="old-price">¥339.00</del>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/1787bd1d-9381-402b-b98e-97ceeddf7692.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女</p>
-							<p class="p-origin">
-								<em class="price">¥179.00</em>
-							</p>
-							<p class="mb0">
-								<del class="old-price">¥358.00</del>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/44cd1b3d-80e7-4e62-94db-ba53a273cfe4.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">帕迪欧单肩包休闲包男包真皮包男士手提包包横款牛皮商务包公文包</p>
-							<p class="p-origin">
-								<em class="price">¥398.00</em>
-							</p>
-							<p class="mb0">
-								<del class="old-price">¥1588.00</del>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/8a009458-f5df-407c-95ca-c2ee81bffbc2.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">2015新款七匹狼男包 男士手包真皮软皮手拿包男商务大容量手抓包</p>
-							<p class="p-origin">
-								<em class="price">¥239.00</em>
-							</p>
-							<p class="mb0">
-								<del class="old-price">¥479.00</del>
-							</p>
-						</div>
-					</div>
-				</a> <a href="views.html">
+				</a>  <a href="views.html">
 					<div class="hproduct clearfix"
 						style="background: #fff; border-top: 0px;">
 						<div class="p-pic">
@@ -216,38 +104,21 @@
 							</p>
 						</div>
 					</div>
-				</a> <a href="views.html">
-					<div class="hproduct clearfix"
-						style="background: #fff; border-top: 0px;">
-						<div class="p-pic">
-							<img style="max-height: 100px; margin: auto;"
-								class="img-responsive"
-								src="img/b0c64749-6129-4069-9965-4ab577d48d6a.jpg">
-						</div>
-						<div class="p-info">
-							<p class="p-title">丹希路真皮女包手提包中年女士包包牛皮时尚休闲单肩斜跨包大包女</p>
-							<p class="p-origin">
-								<em class="price">¥338.00</em>
-							</p>
-							<p class="mb0">
-								<del class="old-price">¥1058.00</del>
-							</p>
-						</div>
-					</div>
-				</a>
+				</a> 
 			</div>
 
 			<div id="ajax_loading"
 				style="display: none; width: 300px; margin: 10px auto 15px; text-align: center;">
 				<img src="images/loading.gif">
 			</div>
-			<form action='/m_search/prodlist' method="post" id="list_form">
-				<input type="hidden" id="curPageNO" name="curPageNO" value="" /> <input
-					type="hidden" id="categoryId" name="categoryId" value="36" /> <input
-					type="hidden" id="orders" name="orders" value="" /> <input
-					type="hidden" id="hasProd" name="hasProd" value="" /> <input
-					type="hidden" id="keyword" name="keyword" value="" /> <input
-					type="hidden" id="prop" name="prop" value="" />
+			<div id="ajax_none"
+				style="display: none; width: 300px; margin: 10px auto 15px; text-align: center;">
+				<p class="p-title"> 没有更多数据了 </p>
+			</div>
+			<form action='<%=basePath%>/product/${whatCode}' method="post" id="list_form">
+				<input type="hidden" id="curPageNO" name="curPageNO" value="0" /> <input
+					type="hidden" id="orders" name="orders" value="date,asc" /> 
+			    <input type="hidden" id="curPageNum" name="curPageNum" value="3" />
 			</form>
 		</div>
 	</div>
@@ -255,20 +126,5 @@
 	</script>
 	<div class="clear"></div>
 
-	<footer class="footer">
-	<div class="foot-con">
-		<div class="foot-con_2">
-			<a href="index.html"> <i class="navIcon home"></i> <span
-				class="text">首页</span>
-			</a> <a href="category.html"> <i class="navIcon sort"></i> <span
-				class="text">分类</span>
-			</a> <a href="shopcart.html"> <i class="navIcon shop"></i> <span
-				class="text">购物车</span>
-			</a> <a href="userhome.html"> <i class="navIcon member"></i> <span
-				class="text">我的</span>
-			</a>
-		</div>
-	</div>
-	</footer>
 </body>
 </html>

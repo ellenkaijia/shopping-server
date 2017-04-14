@@ -284,7 +284,7 @@ function buyNow() {
 
 }
 
-*//** 收藏商品 **//*
+//** 收藏商品 **//*
 function addInterest(obj,prodId){
 	 var _this = $(obj);
 	jQuery.ajax({

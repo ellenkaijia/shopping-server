@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"
+	scope="session" />
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -106,13 +114,13 @@
 	<footer class="footer">
 	<div class="foot-con">
 		<div class="foot-con_2">
-			<a href="index.html"> <i class="navIcon home"></i> <span
+			<a href="<%= basePath%>/index"> <i class="navIcon home"></i> <span
 				class="text">首页</span>
-			</a> <a href="category.html"> <i class="navIcon sort"></i> <span
+			</a> <a href="<%= basePath%>/category"> <i class="navIcon sort"></i> <span
 				class="text">分类</span>
-			</a> <a href="shopcart.html"> <i class="navIcon shop"></i> <span
+			</a> <a href="<%= basePath%>/shopcart"  class="active"> <i class="navIcon shop"></i> <span
 				class="text">购物车</span>
-			</a> <a href="userhome.html"> <i class="navIcon member"></i> <span
+			</a> <a href="<%= basePath%>/userhome"> <i class="navIcon member"></i> <span
 				class="text">我的</span>
 			</a>
 		</div>

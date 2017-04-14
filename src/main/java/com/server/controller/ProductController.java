@@ -56,4 +56,27 @@ public class ProductController {
 		List<SProductLevelDTO> list = spProductMsService.getProductNew(sCurentPageDTO);
 		return list;
 	}
+	
+	@RequestMapping("/getBandList/{bandId}")
+	@ResponseBody
+	public List<SProductLevelDTO> getBandList(@PathVariable("bandId") String bandId, SCurentPageDTO sCurentPageDTO) {
+		logger.info("***********获取品牌商品列表************");
+		logger.info("*******bandId = {}********", bandId);
+		logger.info("--------" + sCurentPageDTO.getOrders());
+		List<SProductLevelDTO> list = spProductMsService.getBandList(bandId, sCurentPageDTO);
+		return list;
+	}
+	
+	@RequestMapping("/getsortList/{sortId}")
+	@ResponseBody
+	public List<SProductLevelDTO> getSortList(@PathVariable("sortId") String sortId, SCurentPageDTO sCurentPageDTO) {
+		logger.info("***********获取品牌商品列表************");
+		logger.info("*******sortId = {}********", sortId);
+		logger.info("--------" + sCurentPageDTO.getOrders());
+		List<SProductLevelDTO> list = spProductMsService.getSortList(sortId, sCurentPageDTO);
+		return list;
+	}
+	
+	
+	
 }

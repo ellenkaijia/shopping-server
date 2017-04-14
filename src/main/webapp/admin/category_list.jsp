@@ -11,15 +11,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script charset="utf-8" src="js/jquery.min.js?v=01291"></script>
-<script charset="utf-8" src="js/global.js?v=01291"></script>
-<script charset="utf-8" src="js/bootstrap.min.js?v=01291"></script>
-<script charset="utf-8" src="js/template.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath %>/js/jquery.min.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath %>/js/global.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath %>/js/bootstrap.min.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath %>/js/template.js?v=01291"></script>
 
-<link rel="stylesheet" href="css/bootstrap.css?v=01291">
-<link rel="stylesheet" href="css/style.css?v=1?v=01291">
-<link rel="stylesheet" href="css/member.css?v=01291">
-<link rel="stylesheet" href="css/order3.css?v=01291">
+<link rel="stylesheet" href="<%= basePath %>/css/bootstrap.css?v=01291">
+<link rel="stylesheet" href="<%= basePath %>/css/style.css?v=1?v=01291">
+<link rel="stylesheet" href="<%= basePath %>/css/member.css?v=01291">
+<link rel="stylesheet" href="<%= basePath %>/css/order3.css?v=01291">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +29,8 @@
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <meta name="viewport"
 	content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
-<script charset="utf-8" src="js/jquery.form.js?v=01291"></script>
-<script charset="utf-8" src="js/prodSort.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath %>/js/jquery.form.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath %>/js/prodSort.js?v=01291"></script>
 <title>商品列表</title>
 </head>
 <body>
@@ -74,7 +74,7 @@
 						<div class="p-pic">
 							<img style="max-height: 100px; margin: auto;"
 								class="img-responsive"
-								src="img/ffb9f5ad-27c7-44e0-8a48-634a71872dfb.png">
+								src="<%= basePath %>/img/ffb9f5ad-27c7-44e0-8a48-634a71872dfb.png">
 						</div>
 						<div class="p-info">
 							<p class="p-title">好德</p>
@@ -92,7 +92,7 @@
 						<div class="p-pic">
 							<img style="max-height: 100px; margin: auto;"
 								class="img-responsive"
-								src="img/3bec333d-f60a-48a3-999c-371c4fe67134.jpg">
+								src="<%= basePath %>/img/3bec333d-f60a-48a3-999c-371c4fe67134.jpg">
 						</div>
 						<div class="p-info">
 							<p class="p-title">BOSSsunwen正品专柜手包男包钱包皮包卡包商务S15-230643A1T</p>
@@ -109,7 +109,7 @@
 
 			<div id="ajax_loading"
 				style="display: none; width: 300px; margin: 10px auto 15px; text-align: center;">
-				<img src="images/loading.gif">
+				<img src="<%= basePath %>/images/loading.gif">
 			</div>
 			<div id="ajax_none"
 				style="display: none; width: 300px; margin: 10px auto 15px; text-align: center;">

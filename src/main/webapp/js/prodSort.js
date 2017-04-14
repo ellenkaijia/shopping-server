@@ -121,6 +121,13 @@ function sendData(){
 
 function handleJsonOverRide(result) {
 	var htmlstring = "";
+	
+	 if(result.length == 0) {
+		 $("#ListTotallist").attr("value",0);
+		 $("#container").html(" <div id=\"ajax_none\" style=\"display: block; width: 300px; margin: 10px auto 15px; text-align: center;\"> <p class=\"p-title\">没有任何数据</p></div>"); 
+		 return;
+	 }
+	
 	for(var i=0; i < result.length; i++) {
 	    htmlstring += "<a href=\"/shopping-server/product/view/"+ result[i].prodId +"\">";
 		htmlstring += "<div class=\"hproduct clearfix\" style=\"background: #fff; border-top: 0px;\">";

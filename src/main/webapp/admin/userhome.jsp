@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"
+	scope="session" />
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -59,15 +67,11 @@
 							<img class="img-circle" src="images/noavatar.png">
 						</div>
 						<div class="member_m_z member_m_z_1">
-							<div class="member_m_x">萧雅哲</div>
+							<div class="member_m_x">未登录</div>
 						</div>
 						<div class="member_m_r">账户管理、收货地址&gt;</div>
 					</div>
 				</a>
-				<div class="member_mp_img" data-toggle="modal"
-					data-target="#myModalmin" data-title="我的名片" data-tpl="mp">
-					<img src="images/member_mp_img.png">
-				</div>
 				<div class="list-group mb10">
 					<a href="/p/userOrder" class="list-group-item tip">
 						<div class="list_group_img">
@@ -134,6 +138,12 @@
 						</div> 意见反馈
 					</a>
 				</div>
+				
+				<div class="list-group mb10" style="text-align:center;">
+					<a href="/p/userOrder" class="list-group-item" style>
+						登录 
+					</a>
+				</div>
 
 			</div>
 		</div>
@@ -168,14 +178,14 @@
 		<footer class="footer">
 		<div class="foot-con">
 			<div class="foot-con_2">
-				<a href="index.html"> <i class="navIcon home"></i> <span
+				<a href="<%= basePath%>/index"> <i class="navIcon home"></i> <span
 					class="text">首页</span>
-				</a> <a href="category.html"> <i class="navIcon sort"></i> <span
+				</a> <a href="<%= basePath%>/category"> <i class="navIcon sort"></i> <span
 					class="text">分类</span>
-				</a> <a href="shopcart.html"> <i class="navIcon shop"></i> <span
+				</a> <a href="<%= basePath%>/shopcart"> <i class="navIcon shop"></i> <span
 					class="text">购物车</span>
-				</a> <a href="userhome.html" class="active"> <i
-					class="navIcon member"></i> <span class="text">我的</span>
+				</a> <a href="<%= basePath%>/userhome" class="active"> <i class="navIcon member"></i> <span
+					class="text">我的</span>
 				</a>
 			</div>
 		</div>

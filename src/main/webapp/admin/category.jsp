@@ -1,17 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}"
+	scope="session" />
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script charset="utf-8" src="js/jquery.min.js?v=01291"></script>
-<script charset="utf-8" src="js/global.js?v=01291"></script>
-<script charset="utf-8" src="js/bootstrap.min.js?v=01291"></script>
-<script charset="utf-8" src="js/template.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath%>/js/jquery.min.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath%>/js/global.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath%>/js/bootstrap.min.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath%>/js/template.js?v=01291"></script>
 
-<link rel="stylesheet" href="css/bootstrap.css?v=01291">
-<link rel="stylesheet" href="css/style.css?v=1?v=01291">
-<link rel="stylesheet" href="css/member.css?v=01291">
-<link rel="stylesheet" href="css/order3.css?v=01291">
+<link rel="stylesheet" href="<%= basePath%>/css/bootstrap.css?v=01291">
+<link rel="stylesheet" href="<%= basePath%>/css/style.css?v=1?v=01291">
+<link rel="stylesheet" href="<%= basePath%>/css/member.css?v=01291">
+<link rel="stylesheet" href="<%= basePath%>/css/order3.css?v=01291">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +30,7 @@
 <meta name="viewport"
 	content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
 <title>分类</title>
-<script charset="utf-8" src="js/category.js?v=01291"></script>
+<script charset="utf-8" src="<%= basePath%>/js/category.js?v=01291"></script>
 </head>
 <body>
 	<header class="header">
@@ -31,7 +39,7 @@
 			<a class="nav-left back-icon" href="javascript:history.go(-1);">返回</a>
 			<div class="tit">分类</div>
 			<div class="sousuo" id="sousou">
-				<img src="images/sou.png">
+				<img src="<%= basePath%>/images/sou.png">
 			</div>
 		</div>
 	</div>
@@ -42,7 +50,7 @@
 			<div class="order_top">
 				<div class="order_a_l">
 					<div id="nav-left_ll">
-						<img src="images/order_top_l.png">
+						<img src="<%= basePath%>/images/order_top_l.png">
 					</div>
 				</div>
 				<div class="order_sou">
@@ -50,7 +58,7 @@
 						name="searchform">
 						<input name="keyword" id="keyword" placeholder="搜索商品" type="text"
 							value=""> <span class="pro_sou" style="cursor: pointer;"
-							onclick="searchproduct();"><img src="images/Search.png"></span>
+							onclick="searchproduct();"><img src="<%= basePath%>/images/Search.png"></span>
 					</form>
 				</div>
 			</div>
@@ -77,7 +85,17 @@
 		<div class="row" id="row_5">
 			<div class="sort-arat" style="margin-top: 10px;">
 				<ul>
-					<li><a href="category_list.html"> <img alt="图片大小为100*100"
+					<c:if test="${sort == null || fn.length(sort) == 0}">
+							<li><p stye="color:black; text-align:center" >空空如也</p></li>
+					</c:if>
+					<c:forEach items="${sort}" var="item" varStatus="status">
+								<li><a href="<%= basePath%>/getSortCategoryList/${item.sortId}"> <img alt="图片大小为200*105"
+									src="<%= basePath%>/${item.imgUrl}"
+									style="height: 90px;" />
+									<p>${item.sortName}</p>
+							</a></li>
+					</c:forEach>
+					<!-- <li><a href="category_list.html"> <img alt="图片大小为100*100"
 							style="width: initial; height: 100px;"
 							src="img/9cb5861c-5ff8-42b8-8c9b-0f6b4a53cde9.jpg">
 							<div
@@ -130,61 +148,23 @@
 							src="img/1613e012-64fa-444a-b4de-83ebd804b0d6.jpg">
 							<div
 								style="width: 90%; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; text-align: center; margin: auto;">运动健康</div>
-					</a></li>
+					</a></li> -->
 			</div>
 
 			<div class="mt10 white-bg">
 				<h4 class="sort-tit">品牌分类</h4>
 				<div class="sort-arat brand-areat">
 					<ul>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/886a68b6-f0aa-41cd-ad89-757c427a33c9.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/899329e3-9ec3-466b-856f-15f2a91b72a4.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/276aed28-5c4c-4ded-9070-59719e583ee5.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/01d5dc75-9e5d-405f-bf93-5793fec72e24.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/a5b3890a-7d78-4bac-be54-45febc984835.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/e6657ca7-c4c5-43fc-9bd6-29999102fc61.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/7865e470-0296-4f6b-98aa-30ab9824358d.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/b5804b78-d14c-4e34-bd39-244183f92997.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/ee767da6-119b-4463-a376-72eb0f495629.png"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/917b4ded-1980-4602-8ad6-a5fa95a9b3b9.jpg"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/ef8d9883-7711-4142-8533-5d7cf91082e4.png"
-								style="height: 39px;" />
-						</a></li>
-						<li><a href="category_list.html"> <img alt="图片大小为200*105"
-								src="img/a265b462-4d22-4914-951b-4068d533be6b.png"
-								style="height: 39px;" />
-						</a></li>
+						<c:if test="${band == null || fn.length(band) == 0}">
+							<li><p stye="color:black; text-align:center" >空空如也</p></li>
+						</c:if>
+						<c:forEach items="${band}" var="item" varStatus="status">
+								<li><a href="<%= basePath%>/getBandCategoryList/${item.bandId}"> <img alt="图片大小为200*105"
+									src="<%= basePath%>/${item.imgUrl}"
+									style="height: 60px;" />
+									<p>${item.bandName}</p>
+							</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
@@ -194,13 +174,13 @@
 	<footer class="footer">
 	<div class="foot-con">
 		<div class="foot-con_2">
-			<a href="index.html"> <i class="navIcon home"></i> <span
+			<a href="<%= basePath%>/index"> <i class="navIcon home"></i> <span
 				class="text">首页</span>
-			</a> <a class="active" href="category.html"> <i class="navIcon sort"></i>
-				<span class="text">分类</span>
-			</a> <a href="shopcart.html"> <i class="navIcon shop"></i> <span
+			</a> <a href="<%= basePath%>/category" class="active"> <i class="navIcon sort"></i> <span
+				class="text">分类</span>
+			</a> <a href="<%= basePath%>/shopcart"> <i class="navIcon shop"></i> <span
 				class="text">购物车</span>
-			</a> <a href="userhome.html"> <i class="navIcon member"></i> <span
+			</a> <a href="<%= basePath%>/userhome"> <i class="navIcon member"></i> <span
 				class="text">我的</span>
 			</a>
 		</div>

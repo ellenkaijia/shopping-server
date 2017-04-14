@@ -17,6 +17,10 @@
 <script charset="utf-8" src="${ctx}/js/template.js?v=01291"></script>
 
 <link rel="stylesheet" href="${ctx}/css/bootstrap.css?v=01291">
+<link rel="stylesheet"
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
 <link rel="stylesheet" href="${ctx}/css/style.css?v=1?v=01291">
 <link rel="stylesheet" href="${ctx}/css/member.css?v=01291">
 <link rel="stylesheet" href="${ctx}/css/order3.css?v=01291">
@@ -93,8 +97,7 @@
 				<ul>
 					<li><label>商城价格：</label> <span class="price">¥<span
 							class="price" id="prodCash">${productDetail.prodPrize}</span></span></li>
-					<li id="choose_0" index="0"><label id="propName"
-						propname="颜色">颜色：</label>
+					<li id="choose_0" index="0"><label id="propName" propname="颜色">颜色：</label>
 						<dl>
 							<dd class="check" key="208:635" valId="635">
 								黑色<span></span>
@@ -110,7 +113,8 @@
 						<div class="count_div" style="height: 30px; width: 130px;">
 							<a href="javascript:void(0);" class="minus"></a> <input
 								type="text" class="count" value="1" id="prodCount"
-								readonly="readonly" /> <a href="javascript:void(0);" class="add"></a>
+								readonly="readonly" /> <a href="javascript:void(0);"
+								class="add"></a>
 						</div></li>
 				</ul>
 			</div>
@@ -131,12 +135,14 @@
 						<ul
 							style="display: table-cell; vertical-align: top; max-width: 768px; width: 100%;"
 							class="property">
-								<c:forEach items="${productDetail.imgUrls}" var="item" varStatus="status">
-									<div
-										style="margin:0 auto; min-height: 300px; overflow: hidden;">
-										<img style="display:inline-block" src="<%= basePath%>/${item}" alt="" />
-									</div>
-								</c:forEach>
+							<c:forEach items="${productDetail.imgUrls}" var="item"
+								varStatus="status">
+								<div
+									style="margin: 0 auto; min-height: 300px; overflow: hidden;">
+									<img style="display: inline-block" src="<%= basePath%>/${item}"
+										alt="" />
+								</div>
+							</c:forEach>
 						</ul>
 						<ul class="txt-imgs"
 							style="display: table-cell; vertical-align: top; max-width: 768px; width: 100%;">
@@ -183,6 +189,33 @@
 					href="javascript:void(0);">加入购物车</a> <a
 					class="btn btn-danger btn-buy" onclick="buyNow();"
 					href="javascript:void(0);">立即购买</a>
+
+				<!-- Button trigger modal -->
+			<!-- 	<button type="button" class="btn btn-primary btn-lg"
+					data-toggle="modal" data-target="#myModal">Launch demo
+					modal</button> -->
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+							<div class="modal-body">您尚未登录，无法加入购物车</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" onclick="loginTo()">
+								去登录</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -192,81 +225,153 @@
 	<footer class="footer">
 	<div class="foot-con">
 		<div class="foot-con_2">
-			<a href="<%= basePath%>/index"> <i class="navIcon home"></i> <span
+			<a href="<%=basePath%>/index"> <i class="navIcon home"></i> <span
 				class="text">首页</span>
-			</a> <a href="<%= basePath%>/category"> <i class="navIcon sort"></i> <span
+			</a> <a href="<%=basePath%>/category"> <i class="navIcon sort"></i> <span
 				class="text">分类</span>
-			</a> <a href="<%= basePath%>/shopcart"> <i class="navIcon shop"></i> <span
+			</a> <a href="<%=basePath%>/shopcart"> <i class="navIcon shop"></i> <span
 				class="text">购物车</span>
-			</a> <a href="<%= basePath%>/userhome"> <i class="navIcon member"></i> <span
-				class="text">我的</span>
+			</a> <a href="<%=basePath%>/userhome"> <i class="navIcon member"></i>
+				<span class="text">我的</span>
 			</a>
 		</div>
 	</div>
 	</footer>
 	<script type="text/javascript">
-var contextPath = '';
-var currProdId = '663';
-var prodName= '艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女';
-var skuDtoList = eval('${productDetail}');
-//var skuDtoList = eval('[{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:636","skuId":1358,"status":1},{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:661","skuId":1359,"status":1},{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:635","skuId":1360,"status":1}]');
-var propValueImgList = eval('[{"imgList":["img/d15bbf94-615d-4b11-9ed8-cb9e2365f12b.jpg","img/f77cb899-e3a5-4ecd-a5dc-af5e2037935f.jpg","img/30259b99-d6ce-44a8-acb8-d6a64278bc88.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/2c06d677-b2ac-459e-8dd0-1c16437333fe.jpg"],"valueId":635},{"imgList":["img/ed971163-f1bf-45e8-b63a-50cf514df3e1.jpg","img/c8117d09-63bc-4e96-adce-89dc7d2017a3.jpg","img/30259b99-d6ce-44a8-acb8-d6a64278bc88.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/01de5ef6-3763-4cfe-bda8-c412266e14c7.jpg"],"valueId":661},{"imgList":["img/53698282-4ff7-4daa-bb4c-4bcaa14b00fc.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/78743cc9-5d29-4289-b0a1-0d5df79e63c7.jpg","img/1c9cc5cf-4ef5-4474-b4ae-7b2f1efa88f0.jpg","img/01de5ef6-3763-4cfe-bda8-c412266e14c7.jpg"],"valueId":636}]');
-var allSelected = true;
-var prodLessMsg = '商品缺货';
-var failedOwnerMsg = '您是商品主人, 不能购买此商品。';
-var failedBasketMaxMsg = '已达到购物车最大数量, 不能购买此商品。';
-var failedBasketErrorMsg = '购物车错误, 不能购买此商品。';
-var photoPath = "";
-var distUserName = '';
+		var contextPath = '';
+		var currProdId = '663';
+		var prodName = '艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女';
+		var skuDtoList = eval('${productDetail}');
+		//var skuDtoList = eval('[{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:636","skuId":1358,"status":1},{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:661","skuId":1359,"status":1},{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:635","skuId":1360,"status":1}]');
+		var propValueImgList = eval('[{"imgList":["img/d15bbf94-615d-4b11-9ed8-cb9e2365f12b.jpg","img/f77cb899-e3a5-4ecd-a5dc-af5e2037935f.jpg","img/30259b99-d6ce-44a8-acb8-d6a64278bc88.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/2c06d677-b2ac-459e-8dd0-1c16437333fe.jpg"],"valueId":635},{"imgList":["img/ed971163-f1bf-45e8-b63a-50cf514df3e1.jpg","img/c8117d09-63bc-4e96-adce-89dc7d2017a3.jpg","img/30259b99-d6ce-44a8-acb8-d6a64278bc88.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/01de5ef6-3763-4cfe-bda8-c412266e14c7.jpg"],"valueId":661},{"imgList":["img/53698282-4ff7-4daa-bb4c-4bcaa14b00fc.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/78743cc9-5d29-4289-b0a1-0d5df79e63c7.jpg","img/1c9cc5cf-4ef5-4474-b4ae-7b2f1efa88f0.jpg","img/01de5ef6-3763-4cfe-bda8-c412266e14c7.jpg"],"valueId":636}]');
+		var allSelected = true;
+		var prodLessMsg = '商品缺货';
+		var failedOwnerMsg = '您是商品主人, 不能购买此商品。';
+		var failedBasketMaxMsg = '已达到购物车最大数量, 不能购买此商品。';
+		var failedBasketErrorMsg = '购物车错误, 不能购买此商品。';
+		var photoPath = "";
+		var distUserName = '';
+		
+		jQuery(document).ready(function() {
+			// 详情数量减少
+			alert(":::");
+			$('.details_con .minus').click(function() {
+				alert("fafs");
+				var _index = $(this).parent().parent().index() - 1;
+				var _count = $(this).parent().find('.count');
+				var _val = _count.val();
+				if (_val > 1) {
+					_count.val(_val - 1);
+					$('.details_con .selected span').eq(_index).text(_val - 1);
 
-//插件：图片轮播
-TouchSlide({
-	slideCell:"#slide",
-	titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-	mainCell:".bd ul",
-	effect:"left",
-	autoPlay:false,//自动播放
-	autoPage:true, //自动分页
-	switchLoad:"_src" //切换加载，真实图片路径为"_src"
-});
+				}
+				if (_val <= 2) {
+					$(this).addClass('disabled');
+				}
 
-var scrollTop = 0;
-TouchSlide({
-	slideCell:"#goodsContent",
-	startFun:function(i,c){
-		var prodId = $("#prodId").val();
-		if(i==1){//规格参数
-			var th = jQuery("#goodsContent .bd ul").eq(i);
-			if(!th.hasClass('hadGoodsContent')){				
-				queryParameter(th,prodId);
-			}
+			});
 
-			if($(window).scrollTop() > scrollTop){
-				$(window).scrollTop(scrollTop);
-			}
-				
-		}else if(i==2){//评价
-			var th = jQuery("#goodsContent .bd ul").eq(i);
+			// 详情数量添加
+			$('.details_con .add').click(function() {
+				var _index = $(this).parent().parent().index() - 1;
+				var _count = $(this).parent().find('.count');
+				var _val = _count.val();
+				$(this).parent().find('.minus').removeClass('disabled');
+				_count.val(_val - 0 + 1);
+				$('.details_con .selected span').eq(_index).text(_val - 0 + 1);
 
-			if(!th.hasClass('hadConments')){
-				queryProdComment(th,prodId);
-			}
+			});
 
-			if($(window).scrollTop() > scrollTop){
-				$(window).scrollTop(scrollTop);
-			}
-		}else{
-			if(scrollTop == 0){
-				$(window).scrollTop(scrollTop);
-				var hd_fav = $('.hd_fav');
-				var position = hd_fav.position();
-				
-				scrollTop = position.top;
-			}
+		});
+
+
+		//插件：图片轮播
+		TouchSlide({
+			slideCell : "#slide",
+			titCell : ".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+			mainCell : ".bd ul",
+			effect : "left",
+			autoPlay : false,//自动播放
+			autoPage : true, //自动分页
+			switchLoad : "_src" //切换加载，真实图片路径为"_src"
+		});
+
+		var scrollTop = 0;
+		TouchSlide({
+			slideCell : "#goodsContent",
+			startFun : function(i, c) {
+				var prodId = $("#prodId").val();
+				if (i == 1) {//规格参数
+					var th = jQuery("#goodsContent .bd ul").eq(i);
+					if (!th.hasClass('hadGoodsContent')) {
+						queryParameter(th, prodId);
+					}
+
+					if ($(window).scrollTop() > scrollTop) {
+						$(window).scrollTop(scrollTop);
+					}
+
+				} else if (i == 2) {//评价
+					var th = jQuery("#goodsContent .bd ul").eq(i);
+
+					if (!th.hasClass('hadConments')) {
+						queryProdComment(th, prodId);
+					}
+
+					if ($(window).scrollTop() > scrollTop) {
+						$(window).scrollTop(scrollTop);
+					}
+				} else {
+					if (scrollTop == 0) {
+						$(window).scrollTop(scrollTop);
+						var hd_fav = $('.hd_fav');
+						var position = hd_fav.position();
+
+						scrollTop = position.top;
+					}
+				}
+			},
+		});
+		
+		function loginTo() {
+			window.location.href="${ctx}/login"; 
 		}
-	},
-});
 
-</script>
+		
+		//加入购物车
+		function addShopCart(value) {
+
+			var prodId = "${productDetail.prodId}";
+
+			var prodCount = $("#prodCount").val();//购买数量
+			jQuery.ajax({
+				url : "${ctx}/addShopCart",
+				data : {
+					"prodId" : prodId,
+					"prodCount" : prodCount
+				},
+				type : 'post',
+				async : false, //默认为true 异步   
+				dataType : 'json',
+				error : function(data) {
+				},
+				success : function(retData) {
+					if (retData.status == 'OFFLINE') {
+						$('#myModal').modal('show');
+					} else if (retData.status == "OK") {
+						floatNotify.simple("成功加入购物车！");
+						var basketCount = $("#totalNum").html();
+						$("#totalNum").html(
+								Number(basketCount) + Number(prodCount));
+					}
+				}
+			});
+		}
+	</script>
 </body>
 </html>
+<style>
+.modal-backdrop {
+	z-index: 0
+}
+</style>

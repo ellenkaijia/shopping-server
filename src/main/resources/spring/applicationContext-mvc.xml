@@ -71,6 +71,10 @@
    <mvc:resources location="/img/" mapping="/img/**"/>
    <mvc:resources location="/js/" mapping="/js/**"/>
    <mvc:resources location="/css/" mapping="/css/**"/>
+   <mvc:resources location="/dist/" mapping="/dist/**"/>
+   <mvc:resources location="/example/" mapping="/example/**"/>
+   <mvc:resources location="/lib/" mapping="/lib/**"/>
+   <mvc:resources location="/src/" mapping="/src/**"/>
    <mvc:resources location="/public/" mapping="/public/**"/>
 	
 	<!-- 控制器异常处理 ??? -->

@@ -1,6 +1,9 @@
 package com.server.filter;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.Filter;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import net.sf.json.JSONObject;
 
 /**
  * 权限过滤器，主要用于页面访问的权限控制
@@ -49,6 +54,7 @@ public class PrivilegeFilter implements Filter {
 		HttpSession session = req.getSession(false);
 
 		String url = PrivilegeFilter.getRequestUri(req);
+		String requestType = req.getHeader("X-Requested-With");//请求类型 判定是否为ajax请求
 
 		String fileExtensionName = "";
 		if (url.indexOf(".") > -1) {
@@ -73,7 +79,20 @@ public class PrivilegeFilter implements Filter {
 			filterChain.doFilter(req, res);
 		}else if("/userhome".equalsIgnoreCase(url)) {
 			filterChain.doFilter(req, res);
-		} else {
+		} else if("/addShopCart".equalsIgnoreCase(url) && requestType.equals("XMLHttpRequest")) {
+			log.info("********addShopCart********");
+			String userId = (String)session.getAttribute("user");
+			if(userId == null) {
+				log.info("********没有登录********");
+				Map<String, Object> map = new HashMap<>();
+				map.put("status", "OFFLINE");
+				res.getWriter().write(JSONObject.fromObject(map).toString());
+			} else {
+				filterChain.doFilter(request, response);
+			}
+		}
+		
+		else {
 			filterChain.doFilter(request, response);
 		}
 	}

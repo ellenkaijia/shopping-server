@@ -12,4 +12,5 @@
     <dubbo:protocol name="dubbo" port="${dubbo.local.url.port}" serialization="kryo" />
     <dubbo:reference id="productLevelMsService" interface="com.server.rpc.ProductLevelMsService" />
     <dubbo:reference id="sproductService" interface="com.server.rpc.SProductMsService" />
+    <dubbo:reference id="userMsService" interface="com.server.rpc.UserMsService" />
 </beans> 

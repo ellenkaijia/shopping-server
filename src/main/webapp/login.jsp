@@ -50,7 +50,7 @@
             <form  id="theForm"  name="theForm" class="form-signin"  action="/p/j_spring_security_check" method="POST" >
             <input type="hidden" id="returnUrl" name="returnUrl" value="http://m.legendshop.cn/p/orderDetails"/>
               
-              <input name="j_username" id="username" type="text" style="margin-bottom: -2px;-webkit-appearance:none; " class="form-control" placeholder="手机号码" message="账号" required="true" autofocus=""  tabindex="1" >
+              <input name="j_username" id="username" type="text" style="margin-bottom: -2px;-webkit-appearance:none; " class="form-control" placeholder="手机号码" message="账号" required="true"  tabindex="1" >
               <br>
               <div id="pwdInput">
               		<input id="pwd" name="j_password" type="password" class="form-control" placeholder="请输入密码" message="密码" required="true" style="-webkit-appearance:none;" autocomplete="off"  tabindex="2" >
@@ -252,8 +252,7 @@ function userLogin() {
 		},
 		success : function(retData) {
 			if (retData.code == 0) {
-				history.back();
-				location.reload();
+				location.href = document.referrer;  //返回上一页并且刷新
 				
 			} else {
 				$('#modalTitle').html(retData.message);

@@ -11,15 +11,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script charset="utf-8" src="js/jquery.min.js?v=01291"></script>
-<script charset="utf-8" src="js/global.js?v=01291"></script>
-<script charset="utf-8" src="js/bootstrap.min.js?v=01291"></script>
-<script charset="utf-8" src="js/template.js?v=01291"></script>
+<script charset="utf-8" src="<%=basePath %>/js/jquery.min.js?v=01291"></script>
+<script charset="utf-8" src="<%=basePath %>/js/global.js?v=01291"></script>
+<script charset="utf-8" src="<%=basePath %>/js/bootstrap.min.js?v=01291"></script>
+<script charset="utf-8" src="<%=basePath %>/js/template.js?v=01291"></script>
 
-<link rel="stylesheet" href="css/bootstrap.css?v=01291">
-<link rel="stylesheet" href="css/style.css?v=1?v=01291">
-<link rel="stylesheet" href="css/member.css?v=01291">
-<link rel="stylesheet" href="css/order3.css?v=01291">
+<link rel="stylesheet" href="<%=basePath %>/css/bootstrap.css?v=01291">
+<link rel="stylesheet" href="<%=basePath %>/css/style.css?v=1?v=01291">
+<link rel="stylesheet" href="<%=basePath %>/css/member.css?v=01291">
+<link rel="stylesheet" href="<%=basePath %>/css/order3.css?v=01291">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +29,7 @@
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <meta name="viewport"
 	content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
-<script charset="utf-8" src="js/shopCart.js?v=01291"></script>
+<%-- <script charset="utf-8" src="<%=basePath %>/js/shopCart.js"></script> --%>
 <title>购物车</title>
 </head>
 <body>
@@ -47,47 +47,55 @@
 	</header>
 	<div class="container ">
 		<div class="row rowcar">
-			<ul class="list-group">
+			<c:if test="${shopcart == null || fn.length(shopcart) == 0}">
+				<ul class="list-group">
+					<li><p stye="color:black; text-align:center" >空空如也,</p></li>
+				</ul>
+			</c:if>
+			<c:forEach items="${shopcart}" var="item" varStatus="status">
+				<ul class="list-group">
 				<li class="list-group-item text-primary">
 					<div class="icheck pull-left mr5">
-						<input type="checkbox" checked="checked" class="ids"
+						<input type="checkbox" class="ids"
 							prodStatus="1" itemkey="" /> <label class="checkLabel"> <span></span>
 						</label>
-					</div> 朗尊软件
+					</div> ${item.bandName}
 				</li>
 				<li class="list-group-item hproduct clearfix">
 					<div class="p-pic">
-						<a href="/views/663"><img class="img-responsive"
-							src="img/1787bd1d-9381-402b-b98e-97ceeddf7692.jpg"></a>
+						<a href="<%=basePath %>/product/view/${item.prodId}"><img class="img-responsive"
+							src="<%=basePath %>/${item.imgUrl}"></a>
 					</div>
 					<div class="p-info">
-						<a href="/views/663"><p class="p-title">艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女</p></a>
-						<p class="p-attr">
-							<span>颜色：红色；</span>
+						<a href="<%=basePath %>/product/view/${item.prodId}"><p class="p-title">${item.prodName}</p></a>
+						<p class="p-attr" style="color:grey;">
+							<span>${item.prodDetail}</span>
 						</p>
 						<p class="p-origin">
 							<a class="close p-close"
-								onclick="deleteShopCart('','艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女','663','1358')"
-								href="javascript:void(0);">×</a> <em class="price">¥179.00</em>
+								onclick="deleteShopCart('${item.prodName}','${item.prodId}')"
+								href="javascript:void(0);">×</a> <em class="price">¥${item.prodPrize}</em>
 						</p>
 					</div>
 				</li>
 				<li class="list-group-item clearfix">
 					<div class="pull-left mt5">
-						<span class="gary">小计：</span> <em class="red productTotalPrice">¥179.00</em>
+						<span class="gary">小计：</span> <em class="red productTotalPrice">¥ ${item.prodPrize * item.prodCount}</em>
 					</div>
 					<div class="btn-group btn-group-sm control-num">
 						<a onclick="disDe(this)" href="javascript:void(0);"
 							class="btn btn-default"><span
 							class="glyphicon glyphicon-minus gary"></span></a> <input type="tel"
-							class="btn gary2 Amount" readonly="readonly" value="1"
-							maxlength="4" itemkey="" prodId="663" skuId="1358"> <a
+							class="btn gary2 Amount" readonly="readonly" value="${item.prodCount}"
+							maxlength="4" prodId="${item.prodId}" maxProdSum = "${item.prodSum}"> <a
 							onclick="increase(this)" href="javascript:void(0);"
 							class="btn btn-default"><span
 							class="glyphicon glyphicon-plus gary"></span></a>
 					</div>
 				</li>
 			</ul>
+			
+			</c:forEach>
 		</div>
 	</div>
 	<div class="fixed-foot">
@@ -100,7 +108,7 @@
 					</label>
 				</div>
 				<p>
-					合计：<em class="red f22">¥<span id="totalPrice">179.00</span></em>
+					合计：<em class="red f22">¥<span id="totalPrice">00.00</span></em>
 				</p>
 			</div>
 			<div class="buy-btn-fix">
@@ -126,8 +134,243 @@
 		</div>
 	</div>
 	</footer>
-	<script type="text/javascript">
-var contextPath = '';
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	console.log("lalalla");
+	
+	//返回顶部
+	$(window).scroll(function(){
+		if($(this).scrollTop()>30){
+			$(".fanhui_cou").fadeIn(1500);
+			
+		}else{
+			$(".fanhui_cou").fadeOut(1500);
+			
+		}
+	});
+	$(".fanhui_cou").click(function(){
+		$("body,html").animate({scrollTop:0},200);
+		return false;
+	});
+	
+	//勾选
+    $(".checkLabel").click(function(){
+    	var flag = $(this).prev().is(':checked');
+    	if(flag){
+            $(this).prev().attr("checked",false);
+            
+            $("#buy-sele-all").attr("checked", false); //将全选勾除
+            $("#buy-sele-all").val(0);
+            
+        }else{
+        	
+            $(this).prev().attr("checked",true);
+            
+            //如果全部都选中了，将全选勾选
+            var groupUL = $(".container").find("ul[class='list-group']").get();
+            var checkUL = $(".container").find("div[class='icheck pull-left mr5'] :checkbox:checked").get();
+            if(groupUL.length == checkUL.length){
+            	$("#buy-sele-all").attr("checked", true);
+            	$("#buy-sele-all").val(1);
+            }
+        }
+    	
+      //计算总价
+	  calculateTotal();
+    });
+    
+    // 全选，全不选
+    $("#buy-sele-all").click(function() {
+        var flag = $(this).val();
+
+        if(flag ==1){
+            $(this).val(0);
+             $(".ids").attr("checked", false);
+        }else{
+            $(this).val(1);
+            $(".ids").attr("checked", true);
+        }
+        
+      //计算总价
+  	  calculateTotal();
+    });
+    
+	  //计算总价
+	//  calculateTotal();
+	});
+
+//相加
+function increase(obj){
+	var _this = $(obj);
+	var _count_obj=_this.prev();
+	var count =Number($(_count_obj).val());
+	var prod_id=$(_count_obj).attr("prodId");
+	var prod_max_sum=$(_count_obj).attr("maxProdSum");
+	
+    var _num=parseInt(count)+1;
+	var re = /^[1-9]+[0-9]*]*$/;  
+	if( isNaN(_num) || ! re.test(_num)) {
+	 	return ;
+	}else if(_num >= prod_max_sum){
+		 floatNotify.simple("超过商品库存量");
+		return;
+	}
+	
+	var result = changeShopCartNumber(_num,prod_id);
+	if(result){
+		$(_count_obj).val(count*1+1);
+		var cash = $(_this).parent().parent().prev().find("em[class='price']").html().substring(1);//单价
+		var total_cash =  $(_this).parent().prev().find("em[class='red productTotalPrice']").html().substring(1);//商品小计
+
+		var e_cash = Math.round((Number(total_cash)+Number(cash))*100)/100;
+		var pos_decimal = e_cash.toString().indexOf('.');
+		if (pos_decimal < 0)
+		{
+			e_cash += '.00';
+		}
+		$(_this).parent().prev().find("em").html("¥"+e_cash);
+		
+		//计算总价
+		calculateTotal();
+	}
+	
+}
+
+//减
+function disDe(obj){
+	var _this = $(obj);
+	var _count_obj=_this.next();
+	var count =Number($(_count_obj).val());
+	var prod_id=$(_count_obj).attr("prodId");
+	var _num=parseInt(count)-1;
+	
+	var re = /^[1-9]+[0-9]*]*$/;  
+	if( isNaN(_num) || ! re.test(_num)) {
+	 	return ;
+	}else if(_num==0){
+		return ;
+	}
+	var result = changeShopCartNumber(_num,prod_id);
+	if(result){
+		$(_count_obj).val(count*1-1);
+		var cash = $(_this).parent().parent().prev().find("em[class='price']").html().substring(1);//单价
+		var total_cash =  $(_this).parent().prev().find("em[class='red productTotalPrice']").html().substring(1);//商品小计		
+		var e_cash = Math.round((Number(total_cash)-Number(cash))*100)/100;
+		var pos_decimal = e_cash.toString().indexOf('.');
+		if (pos_decimal < 0)
+		{
+			e_cash += '.00';
+		}
+		$(_this).parent().prev().find("em").html("¥"+e_cash);
+		
+		//计算总价
+		calculateTotal();
+	}
+}
+//更新购物车商品数量
+function changeShopCartNumber(_num,_prodId){
+	var config = false;
+	$.ajax({
+		url: "${ctx}"+"/changeShopCartNum", 
+		data: {"num":_num,"prodId":_prodId},
+		type:'post', 
+		async : false, //默认为true 异步   
+		dataType : 'json', 
+		error:function(data){
+		},  
+		success:function(result){
+			config = true;
+		}
+	});
+	return config;
+}
+
+//计算总价
+function calculateTotal(){
+	var allCash = 0;
+	var list = $(".container").find("ul[class='list-group']").get();
+	for(var i=0;i<list.length;i++){
+		var selected = $(list[i]).find("div[class='icheck pull-left mr5']>:checkbox").is(":checked");
+		if(selected){
+			var cash = $(list[i]).find("em[class='price']").html().substring(1);//取单价
+			var count = $(list[i]).find("input[class='btn gary2 Amount']").val();//取数量
+			allCash += Number(cash)*Number(count);
+		}
+	}
+	
+	allCash = Math.round(Number(allCash)*100)/100;
+	var pos_decimal = allCash.toString().indexOf('.');
+	if (pos_decimal < 0)
+	{
+		allCash += '.00';
+	}
+	$("#totalPrice").html(allCash);
+}
+
+//删除购物车商品
+function deleteShopCart(_basketName,_prodId){
+	if(confirm("删除后不可恢复, 确定要删除'"+_basketName+"'吗？")){
+		$.ajax({
+			url: "${ctx}"+"/deleteShopCart", 
+			data: {"prod_id":_prodId},
+			type:'post', 
+			async : true, //默认为true 异步   
+			dataType : 'json', 
+			error:function(data){
+			},   
+			success:function(data){
+				if(data.code == 0){
+					location.reload();
+					return;
+				}else{
+					floatNotify.simple("删除失败");
+					return false;
+				}
+				
+			}   
+		});         
+	} 
+}
+
+
+function submitShopCart(){
+	
+	var array = $(".ids:checked").get();
+	if(array.length==0){
+		floatNotify.simple("请选择要结算的商品");
+		return;
+	}
+	
+    var shopCartStr = "";
+	for(var i in array){
+		if(i!=0){
+			shopCartStr =shopCartStr+",";
+		}
+		var basket_id = $(array[i]).attr("itemkey");
+		shopCartStr=shopCartStr + basket_id;
+	}
+	
+	//调用方法  
+	abstractForm(contextPath+'/p/orderDetails', shopCartStr);
+}
+
+function abstractForm(URL, shopCartIds){
+	   var temp = document.createElement("form");        
+	   temp.action = URL;        
+	   temp.method = "post";        
+	   temp.style.display = "none";        
+	   var opt = document.createElement("textarea");        
+	   opt.name = 'shopCartItems';        
+	   opt.value = shopCartIds;        
+	   temp.appendChild(opt);        
+	   document.body.appendChild(temp);        
+	   temp.submit();        
+	   return temp;  
+}
+	
+
 </script>
 </body>
 </html>

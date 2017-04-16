@@ -2,6 +2,8 @@ package com.server.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.server.dto.SCurentPageDTO;
 import com.server.dto.SProductLevelDTO;
 import com.server.rpc.SProductMsService;
+import com.server.rpc.UserMsService;
 
 /**  
 * 类说明   
@@ -29,10 +32,25 @@ public class ProductController {
 	
 	@Autowired
 	private SProductMsService spProductMsService;
+	
+	@Autowired
+	private UserMsService userMsService;
  	
 	@RequestMapping("/view/{prodId}")
-	public ModelAndView productDetail(@PathVariable("prodId") String prodId, ModelAndView modelAndView) {
+	public ModelAndView productDetail(@PathVariable("prodId") String prodId, HttpSession httpSession, ModelAndView modelAndView) {
 		logger.info("*******调用产品详情显示控制，prodId={}********", prodId);
+		String userId = (String) httpSession.getAttribute("userId");
+		if(userId == null) {
+			modelAndView.addObject("shopCarCount", 0);
+			modelAndView.addObject("isFavor", -99);
+			logger.info("*******调用产品详情显示控制1，isFavor={}********", -99);	
+		} else {
+			int isFavor = userMsService.isFavorByUIdProdId(userId, prodId);
+			modelAndView.addObject("isFavor", isFavor);  //0代表收藏 -99没有收藏
+			logger.info("*******调用产品详情显示控制2，isFavor={}********", isFavor);	
+			Integer count = userMsService.getMyShopCartCount(userId);
+			modelAndView.addObject("shopCarCount", count);
+		}
 		SProductLevelDTO sproductDTO = spProductMsService.getProductDetail(prodId);
 		modelAndView.setViewName("/admin/views");
 		modelAndView.addObject("productDetail", sproductDTO);

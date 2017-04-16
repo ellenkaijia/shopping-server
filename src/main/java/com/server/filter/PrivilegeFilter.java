@@ -1,7 +1,6 @@
 package com.server.filter;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -54,7 +53,8 @@ public class PrivilegeFilter implements Filter {
 		HttpSession session = req.getSession(false);
 
 		String url = PrivilegeFilter.getRequestUri(req);
-		String requestType = req.getHeader("X-Requested-With");//请求类型 判定是否为ajax请求
+		String requestType = req.getHeader("X-Requested-With");// 请求类型
+																// 判定是否为ajax请求
 
 		String fileExtensionName = "";
 		if (url.indexOf(".") > -1) {
@@ -72,17 +72,15 @@ public class PrivilegeFilter implements Filter {
 		} else if (!StringUtils.isEmpty(fileExtensionName) && !StringUtils.isEmpty(notPrivilegeStaticFiles)
 				&& notPrivilegeStaticFiles.contains(fileExtensionName)) {
 			// 不做权限校验的静态文件(js、css、images等)
-			filterChain.doFilter(request, response);  //可以再补权限
-		} else if("/category".equalsIgnoreCase(url)) {
+			filterChain.doFilter(request, response); // 可以再补权限
+		} else if ("/category".equalsIgnoreCase(url)) {
 			filterChain.doFilter(req, res);
-		} else if("/shopcart".equalsIgnoreCase(url)) {
+		} else if ("/userhome".equalsIgnoreCase(url)) {
 			filterChain.doFilter(req, res);
-		}else if("/userhome".equalsIgnoreCase(url)) {
-			filterChain.doFilter(req, res);
-		} else if("/addShopCart".equalsIgnoreCase(url) && requestType.equals("XMLHttpRequest")) {
+		} else if ("/addShopCart".equalsIgnoreCase(url) && requestType.equals("XMLHttpRequest")) {
 			log.info("********addShopCart********");
-			String userId = (String)session.getAttribute("user");
-			if(userId == null) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
 				log.info("********没有登录********");
 				Map<String, Object> map = new HashMap<>();
 				map.put("status", "OFFLINE");
@@ -90,8 +88,56 @@ public class PrivilegeFilter implements Filter {
 			} else {
 				filterChain.doFilter(request, response);
 			}
+		} else if ("/shopcart".equalsIgnoreCase(url)) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
+				log.info("********没有登录,转发登录页面********");
+				res.sendRedirect(req.getContextPath() + "/login");
+			} else {
+				filterChain.doFilter(request, response);
+			}
+		} else if ("/addInterest".equalsIgnoreCase(url)) {
+			log.info("********addInterest filter********");
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
+				log.info("********没有登录********");
+				Map<String, Object> map = new HashMap<>();
+				map.put("status", "OFFLINE");
+				res.getWriter().write(JSONObject.fromObject(map).toString());
+			} else {
+				filterChain.doFilter(request, response);
+			}
+		} else if ("/tryToBuy".equalsIgnoreCase(url)) {
+			log.info("********addInterest filter********");
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
+				log.info("********没有登录********");
+				Map<String, Object> map = new HashMap<>();
+				map.put("status", "OFFLINE");
+				res.getWriter().write(JSONObject.fromObject(map).toString());
+			} else {
+				Map<String, Object> map = new HashMap<>();
+				map.put("status", "ONLINE");
+				res.getWriter().write(JSONObject.fromObject(map).toString());
+			}
+		} else if ("/myCollection".equalsIgnoreCase(url)) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
+				log.info("********没有登录,转发登录页面********");
+				res.sendRedirect(req.getContextPath() + "/login");
+			} else {
+				filterChain.doFilter(request, response);
+			}
+		} else if ("/myComment".equalsIgnoreCase(url)) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
+				log.info("********没有登录,转发登录页面********");
+				res.sendRedirect(req.getContextPath() + "/login");
+			} else {
+				filterChain.doFilter(request, response);
+			}
 		}
-		
+
 		else {
 			filterChain.doFilter(request, response);
 		}

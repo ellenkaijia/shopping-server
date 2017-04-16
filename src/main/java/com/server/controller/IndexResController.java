@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -26,6 +26,7 @@ import com.server.base.ResultInfo;
 import com.server.dto.SBandShowDTO;
 import com.server.dto.SProductLevelDTO;
 import com.server.dto.SUserDTO;
+import com.server.dto.ShopCarShowDTO;
 import com.server.dto.SortShowDTO;
 import com.server.rpc.ProductLevelMsService;
 import com.server.rpc.UserMsService;
@@ -51,93 +52,6 @@ public class IndexResController {
 	
 	@Autowired
 	private PropertiesUtil propertiesUtil;
-	
-	@RequestMapping("/login")
-	public ModelAndView loginGo(ModelAndView modelAndView) {
-		logger.info("*********进入到login登录页面控制层********");
-		modelAndView.setViewName("/login");
-		return modelAndView;
-	}
-	
-	@RequestMapping("/register")
-	public ModelAndView registerGo(ModelAndView modelAndView) {
-		logger.info("*********进入到register注册页面控制层********");
-		modelAndView.setViewName("/register");
-		return modelAndView;
-	}
-	
-	@RequestMapping("/loginGo")
-	@ResponseBody
-	public ResultInfo toLoginGo(SUserDTO suserDTO) {
-		logger.info("****loginGo = {}****" );
-		ResultInfo resultInfo = new ResultInfo();
-		Integer result = userMsService.checkPassword(suserDTO);
-		if(result == 0) {
-			resultInfo.setCode(0);
-			resultInfo.setMessage("成功");
-		} else if(result == -98){
-			resultInfo.setCode(-98);
-			resultInfo.setMessage("密码错误");
-		} else if(result == -99) {
-			resultInfo.setCode(-99);
-			resultInfo.setMessage("验证码错误");
-		}
-		return resultInfo;
-		
-	}
-	
-	@RequestMapping("/registerGo")
-	@ResponseBody
-	public ResultInfo toRegisterGo(SUserDTO suserDTO) {
-		logger.info("****registerGo = {}****");
-		ResultInfo resultInfo = new ResultInfo();
-		Integer result = userMsService.registerGo(suserDTO);
-		if(result == 0) {
-			resultInfo.setCode(0);
-			resultInfo.setMessage("成功");
-		} else if(result == 1) {
-			resultInfo.setCode(-99);
-			resultInfo.setMessage("验证码错误");
-		} else if(result == 2) {
-			resultInfo.setCode(-99);
-			resultInfo.setMessage("服务器插入数据错误");
-		}
-		return resultInfo;
-		
-	}
-	
-	
-	@RequestMapping("/checkPhone")
-	@ResponseBody
-	public ResultInfo checkPhone(@RequestParam("phone") String phone) {
-		logger.info("****checkPhone = {}****" , phone);
-		ResultInfo resultInfo = new ResultInfo();
-		boolean result = userMsService.checkPhone(phone);
-		if(result) {
-			resultInfo.setCode(0);
-			resultInfo.setMessage("该手机号码可以登录");
-		} else {
-			resultInfo.setCode(-99);
-			resultInfo.setMessage("该手机号码还没注册");
-		}
-		return resultInfo;
-	}
-	
-	@RequestMapping("/sendSms")
-	@ResponseBody
-	public ResultInfo sendSms(@RequestParam("phone") String phone) {
-		logger.info("****sendSms = {}****" , phone);
-		ResultInfo resultInfo = new ResultInfo();
-		boolean result = userMsService.sendSms(phone);
-		if(result) {
-			resultInfo.setCode(0);
-			resultInfo.setMessage("验证码发送成功");
-		} else {
-			resultInfo.setCode(-99);
-			resultInfo.setMessage("验证码发送失败");
-		}
-		return resultInfo;
-	}
 	
 	@RequestMapping("/index")
 	public ModelAndView indexGo(ModelAndView modelAndView) {
@@ -200,16 +114,34 @@ public class IndexResController {
 		return modelAndView;
 	}
 	
+	/**
+	 * 购物车
+	 * @param modelAndView
+	 * @return
+	 */
 	@RequestMapping("/shopcart")
-	public ModelAndView shopcartGo(ModelAndView modelAndView) {
-		
+	public ModelAndView shopcartGo(ModelAndView modelAndView, HttpSession httpSession) {
+		String userId = (String) httpSession.getAttribute("userId");
+		logger.info("******shopcart请求，shopcartGo方法获取的userId={}**********", userId);
+		List<ShopCarShowDTO> list = productLevelMsService.getShopCartList(userId);
+		modelAndView.addObject("shopcart", list);
 		modelAndView.setViewName("/admin/shopcart");
 		return modelAndView;
 	}
 	
 	@RequestMapping("/userhome")
-	public ModelAndView userhomeGo(ModelAndView modelAndView) {
-		
+	public ModelAndView userhomeGo(ModelAndView modelAndView, HttpSession httpSession) {
+		String userId = (String) httpSession.getAttribute("userId");
+		if(userId == null) {
+			modelAndView.addObject("favorCount", 0);
+			modelAndView.addObject("status", 0);
+		} else {
+			Integer count = userMsService.getMyFavorCount(userId);
+			SUserDTO sUserDTO = userMsService.getUserAllByUid(userId);
+			modelAndView.addObject("favorCount",count);
+			modelAndView.addObject("status", 1);
+			modelAndView.addObject("user",sUserDTO);
+		}
 		modelAndView.setViewName("/admin/userhome");
 		return modelAndView;
 	}
@@ -354,12 +286,30 @@ public class IndexResController {
 		return "/404.jsp";
 	}
 	
-	@RequestMapping("/addShopCart")
-	@ResponseBody
-	public Map<String, Object> addShopCart(@RequestParam("prodId") String prodId,@RequestParam("prodCount") Integer prodCount) {
-		
-		logger.info("prodId = {}, prodCount = {}",prodId,prodCount);
-		return null;
+	@RequestMapping("/myCollection")
+	public ModelAndView getMyCollection(HttpSession httpSession, ModelAndView modelAndView) {
+		List<SProductLevelDTO> list = userMsService.getMyCollectionList((String)httpSession.getAttribute("userId"));
+		logger.info("***myCollection方法 获取的list size = {}****",list.size());
+		modelAndView.addObject("favor", list);
+		modelAndView.setViewName("/admin/favor_list");
+		return modelAndView;
 	}
+	
+	@RequestMapping("/removeCollection")
+	@ResponseBody
+	public ResultInfo removeCollection(HttpSession httpSession, @RequestParam("prodId") String prodId) {
+		ResultInfo resultInfo = new ResultInfo();
+		String userId = (String) httpSession.getAttribute("userId");
+		boolean result = userMsService.removeCollection(userId, prodId);
+		if(result) {
+			resultInfo.setCode(0);
+			resultInfo.setMessage("成功");
+		} else {
+			resultInfo.setCode(-99);
+			resultInfo.setMessage("删除失败");
+		}
+		return resultInfo;
+	}
+	
 	
 }

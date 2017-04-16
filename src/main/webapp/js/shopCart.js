@@ -1,7 +1,10 @@
 $(document).ready(function(){
+	
+	console.log("lalalla");
+	
 	//返回顶部
 	$(window).scroll(function(){
-		if($(this).scrollTop()>300){
+		if($(this).scrollTop()>30){
 			$(".fanhui_cou").fadeIn(1500);
 			
 		}else{
@@ -65,6 +68,7 @@ function increase(obj){
 	var _this = $(obj);
 	var _count_obj=_this.prev();
 	var count =Number($(_count_obj).val());
+	alert(count);
 	var basket_id=$(_count_obj).attr("itemkey");
 	var prod_id=$(_count_obj).attr("prodId");
 	var sku_id=$(_count_obj).attr("skuId");
@@ -102,9 +106,7 @@ function disDe(obj){
 	var _this = $(obj);
 	var _count_obj=_this.next();
 	var count =Number($(_count_obj).val());
-	var basket_id=$(_count_obj).attr("itemkey");
 	var prod_id=$(_count_obj).attr("prodId");
-	var sku_id=$(_count_obj).attr("skuId");
 	var _num=parseInt(count)-1;
 	
 	var re = /^[1-9]+[0-9]*]*$/;  
@@ -134,7 +136,7 @@ function disDe(obj){
 function changeShopCartNumber(_basketId,_num,_prodId,_skuId,type){
 	var config = false;
 	$.ajax({
-		url: contextPath+"/changeShopCartNum", 
+		url: "/changeShopCartNum", 
 		data: {"num":_num,"basketId":_basketId,"prodId":_prodId,"skuId":_skuId,"type":type},
 		type:'post', 
 		async : false, //默认为true 异步   

@@ -50,20 +50,21 @@
             <form  id="theForm"  name="theForm" class="form-signin"  action="/p/j_spring_security_check" method="POST" >
             <input type="hidden" id="returnUrl" name="returnUrl" value="http://m.legendshop.cn/p/orderDetails"/>
               
-              <input name="j_username" id="username" type="text" style="margin-bottom: -2px;-webkit-appearance:none; " class="form-control" placeholder="手机号码" message="账号" required="true" autofocus=""  tabindex="1" >
-              <br>
+              <input name="j_username" id="username" type="text" style="margin-bottom: -2px;-webkit-appearance:none; " class="form-control" placeholder="手机号码" message="账号" required="true"  tabindex="1" >
               <input id="pwd" name="j_password" type="password" class="form-control" placeholder="请输入密码" message="密码" required="true" style="-webkit-appearance:none;" autocomplete="off"  tabindex="2" >
+              <input id="name" name="j_name" type="text" class="form-control" placeholder="请输入用户名" message="用户名" required="true" style="-webkit-appearance:none;" autocomplete="off"  tabindex="3" >
               <br>
-              <input id="name" name="j_name" type="text" class="form-control" placeholder="请输入用户名" message="用户名" required="true" style="-webkit-appearance:none;" autocomplete="off"  tabindex="2" >
+              <div class="clear"></div>
 		      <div class="col-xs-6 p0">
-			         <input id="checkCode" name="j_checkCode" type="text" class="form-control" placeholder="请输入验证码" message="验证码" required="true" style="-webkit-appearance:none;" autocomplete="off"  tabindex="2" >
+			         <input id="checkCode" name="j_checkCode" type="text" class="form-control" placeholder="请输入验证码" message="验证码" required="true" style="-webkit-appearance:none;" autocomplete="off"  tabindex="4" >
 		      </div>
 		      <div class="col-xs-5 p0" style="margin-left:10px;">
 		             <button type="button" id="btnSendCode" class="btn btn-info btn-block" onclick="sendMessage()" tabindex="5" >获取验证码</button>
 		      </div>
-	             <div class="clear"></div>
+		       <div class="clear"></div>
+		      <br>
                 <div class="col-xs-6 p0"><button type="button" class="btn btn-info btn-block" onclick="userRegister();"  tabindex="5" >注册</button></div>
-                <div class="col-xs-5 p0" style="margin-left:10px;"><button type="button" class="btn btn-default btn-block" onclick="window.location.href='<%= basePath %>/login"  tabindex="6" >登录</button></div>
+                <div class="col-xs-5 p0" style="margin-left:10px;"><button type="button" class="btn btn-default btn-block" onclick="window.location.href='<%= basePath%>/login'"  tabindex="6" >登录</button></div>
             </form>
         </div>
      </div>

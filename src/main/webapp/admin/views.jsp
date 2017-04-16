@@ -111,9 +111,10 @@
 						</dl></li>
 					<li><label>数量：</label>
 						<div class="count_div" style="height: 30px; width: 130px;">
-							<a href="javascript:void(0);" class="minus"></a> <input
-								type="text" class="count" value="1" id="prodCount"
-								readonly="readonly" /> <a href="javascript:void(0);"
+							<a onclick="disDe(this)" href="javascript:void(0);" class="minus"></a> <input
+								type="text" class="count" prodPrize = "${productDetail.prodPrize}" prodName="${productDetail.prodName}"
+								prodId="${productDetail.prodId}" value="1" id="prodCount" maxProdSum = "${productDetail.prodSum}"
+								readonly="readonly" /> <a onclick="increase(this)" href="javascript:void(0);"
 								class="add"></a>
 						</div></li>
 				</ul>
@@ -163,7 +164,7 @@
 								<div id="ajax_loading"
 									style="margin: 10px auto 15px; text-align: center;">
 									<img src="images/loading.gif"
-										style="width: auto; display: block; margin: auto;">
+										style="width: auto; display: block; margin: auto;"/>
 								</div>
 							</div>
 							<div class="wap_page" style="display: none;"
@@ -180,9 +181,17 @@
 	<div class="fixed-foot">
 		<div class="fixed_inner">
 			<a class="btn-fav" href="javascript:void(0);"
-				onclick="addInterest(this,'663');"> <i class="i-fav"></i><span>收藏</span>
-			</a> <a class="cart-wrap" href="/shopcart"> <i class="i-cart"></i> <span>购物车</span>
-				<span class="add-num" id="totalNum">0</span>
+				onclick="addInterest(this,'${productDetail.prodId}');" status = "${isFavor}">
+				 <c:choose>
+				 	 <c:when test="${isFavor == -99}">
+				 	 	<i class="i-fav" class="i-fav-active"></i><span>收藏</span>
+				 	 </c:when>
+				 	 <c:otherwise>
+				 	 	<i class="i-fav"></i><span>已收藏</span>
+				 	 </c:otherwise>
+				 </c:choose> 
+			</a> <a class="cart-wrap" href="<%= basePath %>/shopcart"> <i class="i-cart"></i> <span>购物车</span>
+				<span class="add-num" id="totalNum">${shopCarCount}</span>
 			</a>
 			<div class="buy-btn-fix">
 				<a class="btn btn-info btn-cart" onclick="addShopCart();"
@@ -206,16 +215,40 @@
 								</button>
 								<h4 class="modal-title" id="myModalLabel">提示</h4>
 							</div>
-							<div class="modal-body">您尚未登录，无法加入购物车</div>
+							<div class="modal-body" id="modalTitle">您尚未登录，无法加入购物车</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-primary" onclick="loginTo()">
+								<button type="button" class="btn btn-primary" id="buttonToLogin" onclick="loginTo()">
 								去登录</button>
 							</div>
 						</div>
 					</div>
 				</div>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="buyModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+							<div class="modal-body" id="buyBody">商品详情</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" id="buttonToBuy" onclick="toBuy()">
+								去买单</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -240,7 +273,7 @@
 	<script type="text/javascript">
 		var contextPath = '';
 		var currProdId = '663';
-		var prodName = '艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女';
+		var prodName = '';
 		var skuDtoList = eval('${productDetail}');
 		//var skuDtoList = eval('[{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:636","skuId":1358,"status":1},{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:661","skuId":1359,"status":1},{"amountDetail":{"cash":179,"num":1,"price":179,"promotionPrice":179,"totalAmount":179},"name":"艾吉贝2015新款多层收纳真皮单肩斜挎包女包头层牛皮斜跨小包包女","price":179,"properties":"208:635","skuId":1360,"status":1}]');
 		var propValueImgList = eval('[{"imgList":["img/d15bbf94-615d-4b11-9ed8-cb9e2365f12b.jpg","img/f77cb899-e3a5-4ecd-a5dc-af5e2037935f.jpg","img/30259b99-d6ce-44a8-acb8-d6a64278bc88.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/2c06d677-b2ac-459e-8dd0-1c16437333fe.jpg"],"valueId":635},{"imgList":["img/ed971163-f1bf-45e8-b63a-50cf514df3e1.jpg","img/c8117d09-63bc-4e96-adce-89dc7d2017a3.jpg","img/30259b99-d6ce-44a8-acb8-d6a64278bc88.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/01de5ef6-3763-4cfe-bda8-c412266e14c7.jpg"],"valueId":661},{"imgList":["img/53698282-4ff7-4daa-bb4c-4bcaa14b00fc.jpg","img/d2cd16e6-71f0-4c42-b57e-30e417e8a28f.jpg","img/78743cc9-5d29-4289-b0a1-0d5df79e63c7.jpg","img/1c9cc5cf-4ef5-4474-b4ae-7b2f1efa88f0.jpg","img/01de5ef6-3763-4cfe-bda8-c412266e14c7.jpg"],"valueId":636}]');
@@ -252,7 +285,7 @@
 		var photoPath = "";
 		var distUserName = '';
 		
-		jQuery(document).ready(function() {
+		/* jQuery(document).ready(function() {
 			// 详情数量减少
 			alert(":::");
 			$('.details_con .minus').click(function() {
@@ -283,7 +316,7 @@
 			});
 
 		});
-
+ */
 
 		//插件：图片轮播
 		TouchSlide({
@@ -356,16 +389,171 @@
 				error : function(data) {
 				},
 				success : function(retData) {
-					if (retData.status == 'OFFLINE') {
+					if(retData.status == "OFFLINE") {
+						$('#buttonToLogin').show();
 						$('#myModal').modal('show');
-					} else if (retData.status == "OK") {
-						floatNotify.simple("成功加入购物车！");
+						
+					} else if(retData.code == -99){
+						$('#buttonToLogin').hide();
+						$('#modalTitle').html(retData.message);
+						$('#myModal').modal('show');
+					} else if(retData.code == 0){
+						$('#buttonToLogin').hide();
+						$('#modalTitle').html(retData.message);
+						$('#myModal').modal('show');
 						var basketCount = $("#totalNum").html();
 						$("#totalNum").html(
-								Number(basketCount) + Number(prodCount));
+							Number(basketCount) + Number(prodCount));
 					}
 				}
 			});
+		}
+		var globalStatus;
+		function addInterest(obj,prodId){
+			var _this = $(obj);
+			var status = $(_this).attr("status");
+			var reqData;
+			
+			if(status == -99) { //可以收藏
+				globalStatus = 1;
+			} else {
+				globalStatus = 2;
+			}
+			
+			jQuery.ajax({
+				url : '${ctx}' + "/addInterest",
+				data : {
+					"prodId" : prodId,
+					"status" :globalStatus
+				},
+				type : 'post',
+				async : false, //默认为true 异步   
+				dataType : 'json',
+				error : function(data) {
+					floatNotify.simple("服务器出错");
+				},
+				success : function(retData) {
+					if(retData.status == "OFFLINE"){
+						$('#buttonToLogin').show();
+						$('#modalTitle').html("您尚未登录，无法收藏");
+						$('#myModal').modal('show');
+					} else if(retData.code == 0){
+						//更换样式
+						if(retData.data == -98) {
+							_this.find("span").html("已收藏");
+							_this.find("i").addClass("i-fav-active");
+						} else {
+							_this.find("i").removeClass("i-fav-active");
+							_this.find("span").html("收藏");
+						}
+						floatNotify.simple(retData.message);
+						$(_this).attr("status",retData.data);
+					} else {
+						floatNotify.simple(retData.message);
+						$(_this).attr("status",retData.data);
+					}
+				}
+			});
+		}
+		
+		//立即购买
+		function buyNow() {
+			
+			var prodPrize = $("#prodCount").attr("prodPrize");
+			var prodName = $("#prodCount").attr("prodName");
+			var prodId = $("#prodCount").attr("prodId");
+			var prodCount = $("#prodCount").val();//购买数量
+			
+			var string = "<p>商品名称："+ prodName +"</p>" + "<p style=\"color:red\">商品序列号："+ prodId +"</p>"
+			             + "<p>商品颜色：黑色 </p>" + "<p>购买数量："+ prodCount +"</p>" +"<p style=\"color:red\">总金额："
+			             + prodPrize*prodCount +"</p>" ;
+			jQuery.ajax({
+				url : '${ctx}' + "/tryToBuy",
+				type : 'post',
+				async : false, //默认为true 异步   
+				dataType : 'json',
+				error : function(data) {
+				},
+				success : function(retData) {
+					if(retData.status == "OFFLINE") {
+						$('#modalTitle').html("您尚未登录，不能买单哦");
+						$('#buttonToLogin').show();
+						$('#myModal').modal('show');
+					} else {
+						$('#buyBody').html(string);
+						$('#buyModal').modal('show');
+					}
+				}
+			});
+		}
+		
+		function toBuy() {
+			jQuery.ajax({
+				url : '${ctx}' + "/addShopBuy",
+				data : {
+					"prodId" : prodId,
+					"count" : prodCount,
+					"sku_id" : $("#currSkuId").val(),
+					"distUserName":distUserName
+				},
+				type : 'post',
+				async : false, //默认为true 异步   
+				dataType : 'json',
+				error : function(data) {
+				},
+				success : function(retData) {
+					if (retData.status == 'LESS') {
+						floatNotify.simple(prodLessMsg);
+					} else if (retData.status == 'OWNER') {
+						floatNotify.simple(failedOwnerMsg);
+					} else if (retData.status == 'MAX') {
+						floatNotify.simple(failedBasketMaxMsg);
+					} else if (retData.status == 'ERR') {
+						floatNotify.simple(failedBasketErrorMsg);
+					}else if (retData.status == 'NO_SHOP') {
+						floatNotify.simple("商家不存在");
+					}else if (retData.status == 'OFFLINE') {
+						floatNotify.simple("该商品已经下线,不能购买！");
+					}else if (retData.status == "OK") {
+						window.location.href = contextPath+"/shopcart";
+					}
+				}
+			});
+		}
+		
+		//相加
+		function increase(obj){
+			var _this = $(obj);
+			var _count_obj=_this.prev();
+			var count =Number($(_count_obj).val());
+			var prod_max_sum=$(_count_obj).attr("maxProdSum");
+			
+		    var _num=parseInt(count)+1;
+			var re = /^[1-9]+[0-9]*]*$/;  
+			if( isNaN(_num) || ! re.test(_num)) {
+			 	return ;
+			}else if(_num >= prod_max_sum){
+				 floatNotify.simple("超过商品库存量");
+				return;
+			}
+			$(_count_obj).val(_num);
+		}
+
+		//减
+		function disDe(obj){
+			var _this = $(obj);
+			var _count_obj=_this.next();
+			var count =Number($(_count_obj).val());
+			var _num=parseInt(count)-1;
+			
+			var re = /^[1-9]+[0-9]*]*$/;  
+			if( isNaN(_num) || ! re.test(_num)) {
+			 	return ;
+			}else if(_num==0){
+				return ;
+			}
+			$(_count_obj).val(count*1-1);
+				
 		}
 	</script>
 </body>

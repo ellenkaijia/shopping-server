@@ -40,7 +40,7 @@
 	<header class="header header_1">
 	<div class="fix_nav">
 		<div class="nav_inner">
-			<a class="nav-left back-icon" href="javascript:history.back();">返回</a>
+			<a class="nav-left back-icon" href="javascript:location.href = document.referrer">返回</a>
 			<div class="tit">购物车</div>
 		</div>
 	</div>
@@ -48,16 +48,14 @@
 	<div class="container ">
 		<div class="row rowcar">
 			<c:if test="${shopcart == null || fn.length(shopcart) == 0}">
-				<ul class="list-group">
-					<li><p stye="color:black; text-align:center" >空空如也,</p></li>
-				</ul>
+				<img src="<%= basePath%>/image/3.22.gif">
 			</c:if>
 			<c:forEach items="${shopcart}" var="item" varStatus="status">
 				<ul class="list-group">
 				<li class="list-group-item text-primary">
 					<div class="icheck pull-left mr5">
 						<input type="checkbox" class="ids"
-							prodStatus="1" itemkey="" /> <label class="checkLabel"> <span></span>
+							prodStatus="1" itemkey="${item.prodId}" itemName="${item.prodName}" /> <label class="checkLabel"> <span></span>
 						</label>
 					</div> ${item.bandName}
 				</li>
@@ -118,6 +116,52 @@
 		</div>
 	</div>
 	<div class="clear"></div>
+	
+	<!-- Modal -->
+				<div class="modal fade" id="buyModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+							<div class="modal-body" id="buyBody">商品详情</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" id="buttonToBuy" onclick="toBuy()">
+								去买单</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+							<div class="modal-body" id="modalTitle">您尚未登录，无法加入购物车</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" id="buttonToLogin" onclick="loginTo()">
+								去登录</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
 	<footer class="footer">
 	<div class="foot-con">
@@ -311,10 +355,9 @@ function calculateTotal(){
 
 //删除购物车商品
 function deleteShopCart(_basketName,_prodId){
-	if(confirm("删除后不可恢复, 确定要删除'"+_basketName+"'吗？")){
 		$.ajax({
 			url: "${ctx}"+"/deleteShopCart", 
-			data: {"prod_id":_prodId},
+			data: {"prodId":_prodId},
 			type:'post', 
 			async : true, //默认为true 异步   
 			dataType : 'json', 
@@ -331,7 +374,6 @@ function deleteShopCart(_basketName,_prodId){
 				
 			}   
 		});         
-	} 
 }
 
 
@@ -344,16 +386,108 @@ function submitShopCart(){
 	}
 	
     var shopCartStr = "";
+    var shopCartName = "";
 	for(var i in array){
 		if(i!=0){
 			shopCartStr =shopCartStr+",";
+			shopCartName = shopCartName+",";
 		}
-		var basket_id = $(array[i]).attr("itemkey");
-		shopCartStr=shopCartStr + basket_id;
+		var prod_id = $(array[i]).attr("itemkey");
+		var prod_name = $(array[i]).attr("itemName");
+		shopCartStr=shopCartStr + prod_id;
+		shopCartName = shopCartName + prod_name;
 	}
 	
-	//调用方法  
-	abstractForm(contextPath+'/p/orderDetails', shopCartStr);
+	var totalSum = $('#totalPrice').html();
+	
+	var string = "<p>商品名称："+ shopCartName +"</p>" + "<p style=\"color:red\">商品序列号："+ shopCartStr +"</p>"
+	              +"<p style=\"color:red\">总金额："
+	             + totalSum +"</p>" ;
+	jQuery.ajax({
+		url : '${ctx}' + "/tryToBuy",
+		type : 'post',
+		async : false, //默认为true 异步   
+		dataType : 'json',
+		error : function(data) {
+		},
+		success : function(retData) {
+			if(retData.status == "OFFLINE") {
+				$('#modalTitle').html("您尚未登录，不能买单哦");
+				$('#buttonToLogin').show();
+				$('#myModal').modal('show');
+			} else {
+				var f = document.createElement("form");
+				document.body.appendChild(f);
+				var i = document.createElement("input");
+				i.type = "hidden";
+				f.appendChild(i);
+				i.value = shopCartName;
+				i.name = "prodName";
+				
+				var i = document.createElement("input");
+				i.type = "hidden";
+				f.appendChild(i);
+				i.value = shopCartStr;
+				i.name = "prodId";
+				
+				var i = document.createElement("input");
+				i.type = "hidden";
+				f.appendChild(i);
+				i.value = totalSum;
+				i.name = "moneySum";
+				f.action = "${ctx}/orderDetail";
+				f.method = "post";
+				f.submit();
+			}
+		}
+	}); 
+	
+	
+	
+	
+}
+
+function toBuy() {
+	
+	var array = $(".ids:checked").get();
+	var totalSum = $('#totalPrice').html();
+	if(array.length==0){
+		floatNotify.simple("请选择要结算的商品");
+		return;
+	}
+	
+    var shopCartStr = "";
+    var shopCartName = "";
+	for(var i in array){
+		if(i!=0){
+			shopCartStr =shopCartStr+",";
+			shopCartName = shopCartName+",";
+		}
+		var prod_id = $(array[i]).attr("itemkey");
+		var prod_name = $(array[i]).attr("itemName");
+		shopCartStr=shopCartStr + prod_id;
+		shopCartName = shopCartName + prod_name;
+	}
+	
+	
+	jQuery.ajax({
+		url : '${ctx}' + "/shopCarToBuy",
+		data : {
+			"prodName" : shopCartName,
+			"prodId" : shopCartStr,
+			"moneySum" : totalSum
+		},
+		type : 'post',
+		async : false, //默认为true 异步   
+		dataType : 'json',
+		error : function(data) {
+		},
+		success : function(retData) {
+			if(retData.code == 0) {
+				window.location.href='${ctx}'+"/shopCartrade";
+			} 
+		}
+	});
 }
 
 function abstractForm(URL, shopCartIds){

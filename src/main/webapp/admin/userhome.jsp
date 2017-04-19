@@ -88,30 +88,30 @@
 				</c:choose>
 			
 				<div class="list-group mb10">
-					<a href="/p/userOrder" class="list-group-item tip">
+					<a href="<%= basePath%>/userOrder/0" class="list-group-item tip">
 						<div class="list_group_img">
 							<img src="<%= basePath%>/images/member_img16.png">
 						</div> 我的订单 <span class="gary pull-right">查看全部</span>
 					</a>
 					<div class="list-group-item p0 clearfix">
 						<div class="col-xs-3 p0">
-							<a class="order_tab_link" href="/p/userOrder?state_type=1"> <em
+							<a class="order_tab_link" href="<%= basePath%>/userOrder/1"> <em
 								class="order_img"> <img src="<%= basePath%>/images/order_bg_3.png"></em>待付款
 
 							</a>
 						</div>
 						<div class="col-xs-3 p0">
-							<a class="order_tab_link" href="/p/userOrder?state_type=2"> <em
+							<a class="order_tab_link" href="<%= basePath%>/userOrder/2"> <em
 								class="order_img"> <img src="<%= basePath%>/images/order_bg_2.png"></em>待发货
 							</a>
 						</div>
 						<div class="col-xs-3 p0">
-							<a class="order_tab_link" href="/p/userOrder?state_type=3"> <em
+							<a class="order_tab_link" href="<%= basePath%>/userOrder/3"> <em
 								class="order_img"> <img src="<%= basePath%>/images/order_bg_1.png"></em>待收货
 							</a>
 						</div>
 						<div class="col-xs-3 p0">
-							<a class="order_tab_link" href="/p/userOrder?state_type=4"> <em
+							<a class="order_tab_link" href="<%= basePath%>/userOrder/4"> <em
 								class="order_img"> <img src="<%= basePath%>/images/order_bg.png"></em>已完成
 							</a>
 						</div>

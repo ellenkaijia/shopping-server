@@ -37,7 +37,7 @@
 	<div class="fix_nav">
 		<div
 			style="max-width: 768px; margin: 0 auto; height: 44px; position: relative; background: #000000;">
-			<form action="/m_search/list" method="get" id="searchform"
+			<form action="<%= basePath %>/searchFor" method="post" id="searchform"
 				name="searchform">
 				<div class="navbar-search left-search">
 					<input type="text" id="keyword" name="keyword" value=""
@@ -114,7 +114,7 @@
 			</a> <a href="<%= basePath%>/getNew" class="col-xs-3"> <img
 				class="img-responsive" src="image/m-index_14.png">
 				<h4>新品</h4>
-			</a> <a href="/theme/allThemes" class="col-xs-3"> <img
+			</a> <a href="" class="col-xs-3" onclick="zhuangti()"> <img
 				class="img-responsive" src="image/m-index_22.png">
 				<h4>专题列表</h4>
 			</a> <a href="<%= basePath%>/getBand" class="col-xs-3"> <img class="img-responsive"
@@ -129,14 +129,14 @@
 			<div class="tb_box">
 				<h2 class="tab_tit">
 					<a class="more"
-						href="">更多</a>
+						href="<%= basePath %>/getMoreCategoryList/1">更多</a>
 					1F 电视区
 				</h2>
 
-				<c:if test="${dianshi == null || fn.length(dianshi) == 0}">
+				<c:if test="${dianshi == null || fn:length(dianshi) <= 0}">
 					<h2 class="tab_head">空空如也，请耐心等待上线</h2>
 				</c:if>
-				<c:forEach items="${dianshi}" var="item" varStatus="status">
+				<%-- <c:forEach items="${dianshi}" var="item" varStatus="status">
 				<c:choose>
 					 <c:when test="${( (status.index / 3) % 2 ) == 0}">
 							<c:if test="${(status.index) % 3 == 0 && ( (status.index / 3) % 2 ) == 0}">
@@ -212,9 +212,375 @@
 							</c:if>
 						</c:otherwise>
 					</c:choose>
-			</c:forEach>
-
+			</c:forEach> --%>
+			<div class="tb_type tb_type_even clearfix">
+				<c:forEach items="${dianshi}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+			</div>
 		</div>
+		
+		
+		<div class="tb_box">
+				<h2 class="tab_tit">
+					<a class="more"
+						href="<%= basePath %>/getMoreCategoryList/2">更多</a>
+					2F 冰箱区
+				</h2>
+				<div class="tb_type tb_type_even clearfix">
+					<c:if test="${bingxiang == null || fn:length(bingxiang) <= 0}">
+						<p class="tab_head" style="text-align:center;">产品未上线，请耐心期待上线</p>
+					</c:if>
+					
+					<c:forEach items="${bingxiang}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+					
+				</div>
+		</div>
+		
+		<div class="tb_box">
+				<h2 class="tab_tit">
+					<a class="more"
+						href="<%= basePath %>/getMoreCategoryList/3">更多</a>
+					3F 空调区
+				</h2>
+				<div class="tb_type tb_type_even clearfix">
+					<c:if test="${kongtiao == null || fn:length(kongtiao) <= 0}">
+						<p class="tab_head" style="text-align:center;">产品未上线，请耐心期待上线</p>
+					</c:if>
+					
+					<c:forEach items="${kongtiao}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+					
+				</div>
+		</div>
+		
+		<div class="tb_box">
+				<h2 class="tab_tit">
+					<a class="more"
+						href="<%= basePath %>/getMoreCategoryList/4">更多</a>
+					4F 洗衣机区
+				</h2>
+				<div class="tb_type tb_type_even clearfix">
+					<c:if test="${xiyiji == null || fn:length(xiyiji) <= 0}">
+						<p class="tab_head" style="text-align:center;">产品未上线，请耐心期待上线</p>
+					</c:if>
+					
+					<c:forEach items="${xiyiji}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+				
+				</div>
+		</div>
+		
+		<div class="tb_box">
+				<h2 class="tab_tit">
+					<a class="more"
+						href="<%= basePath %>/getMoreCategoryList/5">更多</a>
+					5F 厨房用品区
+				</h2>
+				<div class="tb_type tb_type_even clearfix">
+					<c:if test="${chufang == null || fn:length(chufang) <= 0}">
+						<p class="tab_head" style="text-align:center;">产品未上线，请耐心期待上线</p>
+					</c:if>
+					
+					<c:forEach items="${chufang}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+				
+				</div>
+		</div>
+		
+		<div class="tb_box">
+				<h2 class="tab_tit">
+					<a class="more"
+						href="<%= basePath %>/getMoreCategoryList/6">更多</a>
+					6F 浴室用品区
+				</h2>
+				<div class="tb_type tb_type_even clearfix">
+					<c:if test="${yushi == null || fn:length(yushi) <= 0}">
+						<p class="tab_head" style="text-align:center;">产品未上线，请耐心期待上线</p>
+					</c:if>
+					
+					<c:forEach items="${yushi}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+				
+				</div>
+		</div>
+		
+		<div class="tb_box">
+				<h2 class="tab_tit">
+					<a class="more"
+						href="<%= basePath %>/getMoreCategoryList/7">更多</a>
+					7F 大杂烩区
+				</h2>
+				<div class="tb_type tb_type_even clearfix">
+					<c:if test="${qita == null || fn:length(qita) <= 0}">
+						<p class="tab_head" style="text-align:center;">产品未上线，请耐心期待上线</p>
+					</c:if>
+					
+					<c:forEach items="${qita}" var="item" varStatus="status">
+					<c:if test="${(status.index) % 4 == 0}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 1}">
+								<a class="tb_floor" href="<%= basePath%>/product/view/${item.prodId}"> <img class="tb_pic"
+									src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+	
+							<c:if test="${(status.index) % 4 == 2}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+							<c:if test="${(status.index) % 4 == 3}">
+								<a class="th_link" href="<%= basePath%>/product/view/${item.prodId}"> <img
+									class="tb_pic" src="<%= basePath%>/${item.imgUrls[0]}"
+									style="width: 100%;">
+									<p align="center" style="color: black; font-size: 12px">${item.prodName}</p>
+									<p align="center" style="color: red; font-size: 14px">${item.prodPrize} 元</p>
+								</a>
+							</c:if>
+				</c:forEach>
+				
+				</div>
+		</div>
+		
+		<!-- Modal -->
+				<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+							<div class="modal-body" id="addAddressBody">没有输入搜索字 查不到的</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+							</div>
+						</div>
+					</div>
+				</div>
+		
 		<!--产品块-->
 		<!-- 		<div class="tb_box">
 				<h2 class="tab_tit">
@@ -293,10 +659,14 @@
 		function searchproduct() {
 			var keyword = document.getElementById("keyword").value;
 			if (keyword == undefined || keyword == null || keyword == "") {
-				alert("请输入搜索关键字！");
+				$('#addAddressModal').modal('show');
 				return false;
 			}
 			document.getElementById("searchform").submit();
+		}
+		
+		function zhuangti() {
+			
 		}
 	</script>
 </body>

@@ -30,7 +30,7 @@
 <meta name="viewport"
 	content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
 <script charset="utf-8" src="<%= basePath %>/js/jquery.form.js?v=01291"></script>
-<title>订单列表</title>
+<title>搜索列表</title>
 </head>
 <body>
 	<div class="fanhui_cou">
@@ -41,7 +41,7 @@
 	<div class="fix_nav">
 		<div class="nav_inner">
 			<a class="nav-left back-icon" href="javascript:history.back();">返回</a>
-			<div class="tit">订单列表</div>
+			<div class="tit">搜索列表</div>
 		</div>
 	</div>
 	</header>
@@ -50,34 +50,25 @@
 		<div class="row">
 			
 			<div class="item-list" id="container" rel="2" status="0">
-				<c:if test="${orders == null || fn:length(orders) <= 0}">
+				<c:if test="${search == null || fn:length(search) <= 0}">
 					<ul class="list-group">
-						<li><p stye="color:black; text-align:center" >目前没有订单</p></li>
+						<li><p stye="color:black; text-align:center" >没有相应结果</p></li>
 					</ul>
 				</c:if>
-				<c:forEach items="${orders}" var="item" varStatus="status">
-					<a 
-					href="<%= basePath%>/order/${item.orderId}">
+				<c:forEach items="${search}" var="item" varStatus="status">
+					<a id="${item.prodId}"
+					href="<%= basePath%>/product/view/${item.prodId}">
 					<div class="hproduct clearfix"
 						style="background: #fff; border-top: 0px;">
 						<div class="p-pic">
 							<img style="max-height: 100px; margin: auto;"
 								class="img-responsive"
-								src="<%= basePath %>/images/picBg.jpg">
+								src="<%= basePath %>/${item.imgUrls[0]}">
 						</div>
 						<div class="p-info">
 							<p class="p-title">${item.prodName}</p>
 							<p class="p-origin">
-								<em class="price"><span style="color:black; font-size:10px">单价</span> ¥${item.prodPrize}</em>
-							</p>
-							<p class="p-origin">
-								<em class="price"><span style="color:black; font-size:10px">交易金额</span>  ¥${item.prodPrizeSum}</em>
-							</p>
-							<p class="p-origin" style="float:right" >
-								<span style="color:red; font-size:15px">${item.dateStr}</span>
-							</p>
-							<p class="p-origin" style="float:right" >
-								<span style="color:red; font-size:15px">${item.dateStr}</span>
+								<em class="price">¥${item.prodPrize}</em>
 							</p>
 						</div>
 					</div>
@@ -111,24 +102,6 @@
 				</div>
 
 	<script type="text/javascript">
-		function deleteMyCollection(prodId) {
-			 jQuery.ajax({
-				url : '${ctx}' + "/removeCollection",
-				data : {
-					"prodId" : prodId
-				},
-				type : 'post',
-				async : false, //默认为true 异步   
-				dataType : 'json',
-				error : function(data) {
-				},
-				success : function(retData) {
-					if(retData.code == 0) {
-						location.reload();
-					}
-				}
-			}); 
-		}
 	</script>
 	<div class="clear"></div>
 

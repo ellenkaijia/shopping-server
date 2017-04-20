@@ -83,6 +83,8 @@
 							<div class="member_m_z member_m_z_1">
 								<div class="member_m_x">${user.userName}</div>
 							</div>
+							<div class="member_m_r"><a href="<%=basePath%>/userToAddAddress" style="color:white">收货地址&gt;</a>
+							</div>
 						</div>   
 				   </c:otherwise>
 				</c:choose>

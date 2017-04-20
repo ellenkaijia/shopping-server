@@ -49,7 +49,8 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/orderDetail")
-	public ModelAndView orderDetail(HttpServletRequest request,HttpServletResponse response,ModelAndView modelAndView,HttpSession httpSession,@RequestParam(value="prodName",required=false) String prodName, @RequestParam(value="prodId",required=false) String prodId, @RequestParam(value="moneySum",required=false) BigDecimal moneySum) {
+	public ModelAndView orderDetail(HttpServletRequest request,HttpServletResponse response,ModelAndView modelAndView,HttpSession httpSession,@RequestParam(value="prodName",required=false) String prodName,
+			@RequestParam(value="prodId",required=false) String prodId, @RequestParam(value="moneySum",required=false) BigDecimal moneySum,@RequestParam(value="prodCount",required=false) Integer prodCount) {
 		if(prodId == null || prodName == null) {
 			try {
 				response.sendRedirect(request.getContextPath() + "/index");
@@ -60,9 +61,9 @@ public class OrderController {
 		}
 		
 		modelAndView.setViewName("/admin/orderDetail");
-		logger.info("*******orderDetail方法，prodName={},prodId={},moneySum={}************",prodName,prodId,moneySum);
+		logger.info("*******orderDetail方法，prodName={},prodId={},moneySum={}, prodCount={}************",prodName,prodId,moneySum,prodCount);
 		String userId = (String) httpSession.getAttribute("userId");
-		List<SProductLevelDTO> productList = userMsService.getOrderByUidPid(userId, prodId);
+		List<SProductLevelDTO> productList = userMsService.getOrderByUidPid(userId, prodId, prodCount);
 		SAddressDTO dto = userMsService.getAddressStatusOne(userId);
 		modelAndView.addObject("moneySum", moneySum);
 		modelAndView.addObject("productList", productList);
@@ -70,4 +71,30 @@ public class OrderController {
 		
 		return modelAndView;
 	}
+	
+	
+	@RequestMapping("/oneOrderDetail")
+	public ModelAndView oneOrderDetail(HttpServletRequest request,HttpServletResponse response,ModelAndView modelAndView,HttpSession httpSession,@RequestParam(value="prodName",required=false) String prodName,
+			@RequestParam(value="prodId",required=false) String prodId, @RequestParam(value="moneySum",required=false) BigDecimal moneySum,@RequestParam(value="prodCount",required=false) Integer prodCount) {
+		if(prodId == null || prodName == null) {
+			try {
+				response.sendRedirect(request.getContextPath() + "/index");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		modelAndView.setViewName("/admin/oneOrderDetail");
+		logger.info("*******orderDetail方法，prodName={},prodId={},moneySum={}, prodCount={}************",prodName,prodId,moneySum,prodCount);
+		String userId = (String) httpSession.getAttribute("userId");
+		List<SProductLevelDTO> productList = userMsService.getOrderByUidPid(userId, prodId, prodCount);
+		SAddressDTO dto = userMsService.getAddressStatusOne(userId);
+		modelAndView.addObject("moneySum", moneySum);
+		modelAndView.addObject("productList", productList);
+		modelAndView.addObject("address", dto);
+		
+		return modelAndView;
+	}
+	
 }

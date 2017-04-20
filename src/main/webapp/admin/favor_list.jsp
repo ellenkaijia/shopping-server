@@ -50,7 +50,7 @@
 		<div class="row">
 			
 			<div class="item-list" id="container" rel="2" status="0">
-				<c:if test="${favor == null || fn.length(favor) == 0}">
+				<c:if test="${favor == null || fn:length(favor) <= 0}">
 					<ul class="list-group">
 						<li><p stye="color:black; text-align:center" >空空如也</p></li>
 					</ul>

@@ -95,6 +95,16 @@ public class ProductController {
 		return list;
 	}
 	
+	@RequestMapping("/getmoreList/{more}")
+	@ResponseBody
+	public List<SProductLevelDTO> getmoreList(@PathVariable("more") Integer more, SCurentPageDTO sCurentPageDTO) {
+		logger.info("***********获取品牌商品列表************");
+		logger.info("*******more = {}********", more);
+		logger.info("--------" + sCurentPageDTO.getOrders());
+		List<SProductLevelDTO> list = spProductMsService.getMoreList(more, sCurentPageDTO);
+		return list;
+	}
+	
 	
 	
 }

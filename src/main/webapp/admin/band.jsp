@@ -71,7 +71,7 @@
 				<h4 class="sort-tit">品牌分类</h4>
 				<div class="sort-arat brand-areat">
 					<ul>
-						<c:if test="${band == null || fn.length(band) == 0}">
+						<c:if test="${band == null || fn:length(band) <= 0}">
 							<li><p stye="color:black; text-align:center" >空空如也</p></li>
 						</c:if>
 						<c:forEach items="${band}" var="item" varStatus="status">

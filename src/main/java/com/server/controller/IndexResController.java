@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.server.base.ProdTypeCodeConstant;
@@ -53,9 +54,31 @@ public class IndexResController {
 	@RequestMapping("/index")
 	public ModelAndView indexGo(ModelAndView modelAndView) {
 		logger.info("*********进入到index主页面控制层********");
-		List<SProductLevelDTO> listDS = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.DIANSHI);
-		logger.info("listDS的list size：" + listDS.size());
-		modelAndView.addObject("dianshi", listDS);
+		List<SProductLevelDTO> dianshi = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.DIANSHI);
+		List<SProductLevelDTO> bingxiang = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.BINGXIANG);
+		List<SProductLevelDTO> kongtiao = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.KONGTIAO);
+		List<SProductLevelDTO> xiyiji = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.XIYIJI);
+		List<SProductLevelDTO> chufang = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.CHUFANG);
+		List<SProductLevelDTO> yushi = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.YUSHI);
+		List<SProductLevelDTO> qita = productLevelMsService.getProductLevelByCode(ProdTypeCodeConstant.QITA);
+		
+		logger.info("dianshi的list size：" + dianshi.size());
+		logger.info("bingxiang的list size：" + bingxiang.size());
+		logger.info("kongtiao的list size：" + kongtiao.size());
+		logger.info("xiyiji的list size：" + xiyiji.size());
+		logger.info("chufang的list size：" + chufang.size());
+		logger.info("yushi的list size：" + yushi.size());
+		logger.info("qita的list size：" + qita.size());
+		
+		
+		modelAndView.addObject("dianshi", dianshi);
+		modelAndView.addObject("bingxiang", bingxiang);
+		modelAndView.addObject("kongtiao", kongtiao);
+		modelAndView.addObject("xiyiji", xiyiji);
+		modelAndView.addObject("chufang", chufang);
+		modelAndView.addObject("yushi", yushi);
+		modelAndView.addObject("qita", qita);
+		
 		modelAndView.setViewName("/index");
 		return modelAndView;
 	}
@@ -102,6 +125,13 @@ public class IndexResController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("/getMoreCategoryList/{more}")
+	public ModelAndView getSortList(@PathVariable("more") Integer more, ModelAndView modelAndView) {
+		modelAndView.addObject("whatCode", "getmoreList/" + more);
+		modelAndView.setViewName("/admin/category_list");
+		return modelAndView;
+	}
+	
 	@RequestMapping("/getBand")
 	public ModelAndView getProductBand(ModelAndView modelAndView) {
 		List<SBandShowDTO> list = productLevelMsService.getProductBandAll();
@@ -140,6 +170,14 @@ public class IndexResController {
 			modelAndView.addObject("user",sUserDTO);
 		}
 		modelAndView.setViewName("/admin/userhome");
+		return modelAndView;
+	}
+	
+	@RequestMapping("/searchFor")
+	public ModelAndView searchFor(ModelAndView modelAndView,@RequestParam("keyword") String keyword) {
+		List<SProductLevelDTO> list = productLevelMsService.searchForList(keyword);
+		modelAndView.addObject("search", list);
+		modelAndView.setViewName("/admin/search_list");
 		return modelAndView;
 	}
 	
@@ -203,6 +241,34 @@ public class IndexResController {
 	public String getSortListResourceStream(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("******进入图片的模块*******");
 		String pathInfo = request.getServletPath().substring("/getSortCategoryList/picResource".length()); // request.getPathInfo()
+		String filePath = propertiesUtil.getProperties().get("product_file_path") + pathInfo;
+		File file = new File(filePath);
+		logger.info("图片路径为：" + filePath);
+		if (file.isFile()) {
+			response.setHeader("Content-Type", request.getServletContext().getMimeType(file.getName()));
+			response.setHeader("Content-Length", String.valueOf(file.length()));
+			response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
+
+			OutputStream out = null;
+			try {
+				out = response.getOutputStream();
+				Files.copy(file.toPath(), out);
+			} catch (IOException e) {
+				logger.error(e.toString(), e);
+				response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+			} finally {
+				IOUtils.closeQuietly(out);
+			}
+			return null;
+		}
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+		return "/404.jsp";
+	}
+	
+	@RequestMapping("/getMoreCategoryList/picResource/**")
+	public String getMoreListResourceStream(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("******进入图片的模块*******");
+		String pathInfo = request.getServletPath().substring("/getMoreCategoryList/picResource".length()); // request.getPathInfo()
 		String filePath = propertiesUtil.getProperties().get("product_file_path") + pathInfo;
 		File file = new File(filePath);
 		logger.info("图片路径为：" + filePath);

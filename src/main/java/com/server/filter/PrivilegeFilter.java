@@ -144,7 +144,16 @@ public class PrivilegeFilter implements Filter {
 			} else {
 				filterChain.doFilter(request, response);
 			}
-		} else {
+		} else if("/userToAddAddress".equalsIgnoreCase(url)) {
+			String userId = (String) session.getAttribute("userId");
+			if (userId == null) {
+				log.info("********没有登录,转发登录页面********");
+				res.sendRedirect(req.getContextPath() + "/login");
+			} else {
+				res.sendRedirect(req.getContextPath() + "/getAddressList");
+			}
+		}
+		else {
 			filterChain.doFilter(request, response);
 		}
 	}

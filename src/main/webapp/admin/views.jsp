@@ -249,6 +249,30 @@
 					</div>
 				</div>
 				
+				<!-- Modal -->
+				<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">提示</h4>
+							</div>
+							<div class="modal-body" id="addAddressBody">商品详情</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" id="addAdressId" onclick="addAdress()">
+								去添加</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
 			</div>
 		</div>
 	</div>
@@ -370,6 +394,9 @@
 			window.location.href="${ctx}/login"; 
 		}
 
+		function addAdress() {
+			window.location.href = '${ctx}/' + "getAddressList";
+		}
 		
 		//加入购物车
 		function addShopCart(value) {
@@ -480,11 +507,88 @@
 						$('#buttonToLogin').show();
 						$('#myModal').modal('show');
 					} else {
-						$('#buyBody').html(string);
-						$('#buyModal').modal('show');
+						
+						isHaveAddress(prodName, prodId, prodCount, prodPrize);
+						/* var f = document.createElement("form");
+						document.body.appendChild(f);
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodName;
+						i.name = "prodName";
+						
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodId;
+						i.name = "prodId";
+						
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodCount;
+						i.name = "prodCount";
+						
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodPrize*prodCount;
+						i.name = "moneySum";
+						f.action = "${ctx}/oneOrderDetail";
+						f.method = "post";
+						f.submit(); */
 					}
 				}
 			});
+		}
+		
+		function isHaveAddress( prodName, prodId, prodCount, prodPrize) {
+			
+			jQuery.ajax({
+				url : '${ctx}' + "/isHaveAddress",
+				type : 'post',
+				async : false, //默认为true 异步   
+				dataType : 'json',
+				error : function(data) {
+				},
+				success : function(retData) {
+					if(retData.code == -99) {
+						$('#addAddressBody').html("您还没有添加默认地址");
+						$('#addAddressModal').modal('show');
+					} else {
+						var f = document.createElement("form");
+						document.body.appendChild(f);
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodName;
+						i.name = "prodName";
+						
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodId;
+						i.name = "prodId";
+						
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodCount;
+						i.name = "prodCount";
+						
+						var i = document.createElement("input");
+						i.type = "hidden";
+						f.appendChild(i);
+						i.value = prodPrize*prodCount;
+						i.name = "moneySum";
+						f.action = "${ctx}/oneOrderDetail";
+						f.method = "post";
+						f.submit();
+					}
+				}
+			}); 
+			
+			
 		}
 		
 		function toBuy() {

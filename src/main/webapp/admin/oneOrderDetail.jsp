@@ -104,11 +104,11 @@
 						<div class="address-left">
 							<div class="user DefaultAddr">
 
-								<span class="buy-address-detail"> <span class="buy-user">${address.userName}
+								<span class="buy-address-detail" id="addressIdFor" addressId="${address.id}"> <span class="buy-user">${address.userName}
 								</span> <span class="buy-phone">${address.userPhone}</span>
 								</span>
 							</div>
-							<div class="default-address DefaultAddr" id="addressIdFor" addressId="${address.id}">
+							<div class="default-address DefaultAddr">
 								<span class="buy-line-title buy-line-title-type">收货地址：</span>
 								<span class="buy--address-detail"> 
 									${address.userAddress}
@@ -125,13 +125,15 @@
 							<ins class="deftip">默认地址</ins>
 						</div>
 						<div class="address-right">
-							<a href="<%=basePath %>/getAddressList"> <span
+							<a href="../person/address.html"> <span
 								class="am-icon-angle-right am-icon-lg"></span></a>
 						</div>
 						<div class="clear"></div>
 
 						<div class="new-addr-btn">
-							<a href="#" class="hidden">设为默认</a></span> <a href="javascript:void(0);"
+							<a href="#" class="hidden">设为默认</a> <span
+								class="new-addr-bar hidden">|</span> <a href="#">编辑</a> <span
+								class="new-addr-bar">|</span> <a href="javascript:void(0);"
 								onclick="delClick(this);">删除</a>
 						</div>
 
@@ -214,7 +216,7 @@
 											</div>
 											<div class="item-info">
 												<div class="item-basic-info">
-													<a href="#" class="item-title J_MakePoint" prodId="${item.prodId}"
+													<a href="#" class="item-title J_MakePoint" prodId="${item.prodId}" prodCount="${item.buyCount}"
 														data-point="tbcart.8.11">${item.prodName}</a>
 												</div>
 											</div>
@@ -417,6 +419,7 @@
 			var index = 0;
 			var shopCartName = "";
 			var prodIds = "";
+			var prodCount;
 			
 			$(".item-title&.J_MakePoint").each(function() {
 				if(index != 0) {
@@ -425,20 +428,21 @@
 				}
 				shopCartName =  shopCartName + $(this).html();
 				prodIds = prodIds + $(this).attr("prodId");
+				prodCount = $(this).attr("prodCount");
 				index ++;
 			});
 			
-			var addressId = $("#addressIdFor").attr("addressId");
-			
 			var totalSum = $('#J_ActualFee').html();
-
+			var addressId = $('#addressIdFor').attr("addressId");
 			jQuery.ajax({
-				url : '${ctx}' + "/shopCarToBuy",
+				url : '${ctx}' + "/productBuy",
 				data : {
 					"prodName" : shopCartName,
 					"prodId" : prodIds,
 					"moneySum" : totalSum,
+					"buyCount" : prodCount,
 					"addressId" : addressId
+					
 				},
 				type : 'post',
 				async : false, //默认为true 异步   
@@ -447,7 +451,7 @@
 				},
 				success : function(retData) {
 					if (retData.code == 0) {
-						window.location.href = '${ctx}' + "/shopCartrade";
+						window.location.href = '${ctx}' + "/trade";
 					}
 				}
 			});

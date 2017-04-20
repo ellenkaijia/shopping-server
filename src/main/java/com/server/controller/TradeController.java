@@ -45,6 +45,7 @@ public class TradeController {
 		httpSession.setAttribute("prodId", userBuyDTO.getProdId());
 		httpSession.setAttribute("buyCount", userBuyDTO.getBuyCount());
 		httpSession.setAttribute("moneySum", userBuyDTO.getMoneySum());
+		httpSession.setAttribute("oneAddressId", userBuyDTO.getAddressId());
 		
 		resultInfo.setCode(0);
 		resultInfo.setMessage("成功");
@@ -70,11 +71,12 @@ public class TradeController {
 		Integer buyCount = (Integer) httpSession.getAttribute("buyCount");
 		String prodId = (String) httpSession.getAttribute("prodId");
 		String userId = (String) httpSession.getAttribute("userId");
+		Long addressId = (Long) httpSession.getAttribute("oneAddressId");
 		
-		logger.info("*****traderesult, moneySum={},buyCount={},prodId={},userId={}****"
-				,moneySum,buyCount,prodId,userId);
+		logger.info("*****traderesult, moneySum={},buyCount={},prodId={},userId={},addressId={}****"
+				,moneySum,buyCount,prodId,userId,addressId);
 		
-		Map<String, String> resultMap = userMsService.tradeIntoOrder(userId, prodId, buyCount, moneySum);
+		Map<String, String> resultMap = userMsService.tradeIntoOrder(userId, prodId, buyCount, moneySum, addressId);
 		String code = resultMap.get("code");
 		String orderId = "交易失败";
 		if(code.equals("0")) {
@@ -94,7 +96,8 @@ public class TradeController {
 	@RequestMapping("/shopCarToBuy")
 	@ResponseBody
 	public ResultInfo shopCarToBuy(HttpSession httpSession,@RequestParam(value="prodName",required=false) String prodName,
-			@RequestParam(value="prodId",required=false) String prodId, @RequestParam(value="moneySum",required=false) BigDecimal moneySum) {
+			@RequestParam(value="prodId",required=false) String prodId, @RequestParam(value="moneySum",required=false) BigDecimal moneySum,
+			@RequestParam(value="addressId",required=false) Long addressId) {
 		ResultInfo resultInfo = new ResultInfo();
 		
 		logger.info("*******shopCarToBuy方法，prodName={},prodId={},moneySum={}************",prodName,prodId,moneySum);
@@ -102,6 +105,7 @@ public class TradeController {
 		httpSession.setAttribute("prodIds", prodId);
 		httpSession.setAttribute("prodNames", prodName);
 		httpSession.setAttribute("shopcartMoneySum", moneySum);
+		httpSession.setAttribute("addressId", addressId);
 		
 		resultInfo.setCode(0);
 		resultInfo.setMessage("成功");
@@ -126,11 +130,12 @@ public class TradeController {
 		BigDecimal moneySum = (BigDecimal) httpSession.getAttribute("shopcartMoneySum");
 		String prodIds = (String) httpSession.getAttribute("prodIds");
 		String userId = (String) httpSession.getAttribute("userId");
+		Long addressId = (Long) httpSession.getAttribute("addressId");
 		
-		logger.info("*****traderesult, moneySum={},prodId={},userId={}****"
-				,moneySum,prodIds,userId);
+		logger.info("*****traderesult, moneySum={},prodId={},userId={},addressId={}****"
+				,moneySum,prodIds,userId,addressId);
 		
-		Map<String, String> resultMap = userMsService.shopCartradeOrder(userId, prodIds);
+		Map<String, String> resultMap = userMsService.shopCartradeOrder(userId, prodIds, addressId);
 		String code = resultMap.get("code");
 		String orderId = "交易失败";
 		if(code.equals("0")) {

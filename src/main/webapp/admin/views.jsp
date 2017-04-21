@@ -61,7 +61,7 @@
 	<div class="fix_nav">
 		<div
 			style="max-width: 768px; margin: 0 auto; background: #000; position: relative;">
-			<a class="nav-left back-icon" href="javascript:history.back();">返回</a>
+			<a class="nav-left back-icon" href="javascript:window.location.href='${ctx}/index'">返回</a>
 			<div class="tit">商品详细</div>
 		</div>
 	</div>

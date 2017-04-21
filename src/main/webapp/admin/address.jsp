@@ -122,6 +122,11 @@
 					<div class="am-cf am-padding">
 						<div class="am-fl am-cf">
 							<strong class="am-text-danger am-text-lg">地址管理</strong> / <small>Address&nbsp;list</small>
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							&nbsp;
+							<a class="am-text-danger am-text-lg" onclick="javascript:history.back()">返回</a>
 						</div>
 					</div>
 					<hr />
@@ -315,7 +320,7 @@
 				<script type="text/javascript">
 						$(document).ready(function() {							
 							$(".new-option-r").click(function() {
-								
+								$(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
 								var id = $(this).attr("addressId");
 								jQuery.ajax({
 									url : '${ctx}' + "/updateAddressStatus",

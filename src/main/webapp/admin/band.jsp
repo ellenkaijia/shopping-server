@@ -54,7 +54,7 @@
 					</div>
 				</div>
 				<div class="order_sou">
-					<form action="/m_search/list" method="get" id="searchform"
+					<form action="" method="get" id="searchform"
 						name="searchform">
 						<input name="keyword" id="keyword" placeholder="搜索商品" type="text"
 							value=""> <span class="pro_sou" style="cursor: pointer;"

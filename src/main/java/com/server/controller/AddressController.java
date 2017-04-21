@@ -112,7 +112,7 @@ public class AddressController {
 	
 	@RequestMapping("/deleteAddress")
 	@ResponseBody
-	public ResultInfo deleteAddress(HttpSession httpSession, @RequestParam("id") Integer id) {
+	public ResultInfo deleteAddress(HttpSession httpSession, @RequestParam("id") Long id) {
 		
 		logger.info("******deleteAddress方法,id={}*******", id);
 		ResultInfo resultInfo = new ResultInfo();

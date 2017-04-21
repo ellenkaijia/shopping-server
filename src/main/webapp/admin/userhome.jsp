@@ -129,8 +129,8 @@
 						<div class="m_img">
 							<img src="<%= basePath%>/images/order_bg_8.png">
 						</div>
-						<p class="m_name">我的评论</p> <span class="red">&nbsp;&nbsp;</span>
-					</a> <a href="<%= basePath%>/infoBox" class="list-group-item col-xs-4">
+						<p class="m_name">我的保/微修</p> <span class="red">&nbsp;&nbsp;</span>
+					</a> <a href="<%= basePath%>/myRepair" class="list-group-item col-xs-4">
 						<div class="m_img">
 							<img src="<%= basePath%>/images/order_bg_4.png">
 						</div>
@@ -145,11 +145,11 @@
 				</div>
 
 				<div class="list-group mb10">
-					<a href="" class="list-group-item tip">
+					<a onclick="tanchu()" class="list-group-item tip">
 						<div class="list_group_img">
 							<img src="<%= basePath%>/images/order_bg_10.png">
 						</div> 常见问题
-					</a> <a href="" class="list-group-item tip">
+					</a> <a onclick="tanchu()" class="list-group-item tip">
 						<div class="list_group_img">
 							<img src="<%= basePath%>/images/order_bg_9.png">
 						</div> 意见反馈
@@ -258,6 +258,11 @@
 					location.reload();
 				}
 			});
+		}
+		
+		function tanchu() {
+			$('#modalTitle').html("请联系：赵楷佳 13728734092");
+			$('#myModal').modal('show');
 		}
 	</script>
 </body>

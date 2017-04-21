@@ -97,4 +97,18 @@ public class OrderController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("/userOrderDetail/{orderId}")
+	public ModelAndView userOrderDetail(ModelAndView modelAndView,HttpSession httpSession,@PathVariable("orderId") String orderId) {
+		
+		modelAndView.setViewName("/admin/userOrderDetail");
+		logger.info("*******userOrderDetail方法，rderId={}************",orderId);
+		String userId = (String) httpSession.getAttribute("userId");
+		SAddressDTO sAddressDTO = userMsService.geAddressDTOByOrderId(userId, orderId);
+		List<SProductLevelDTO> productList = userMsService.getProductByOrderId(orderId);
+		SAddressDTO dto = userMsService.getAddressStatusOne(userId);
+		modelAndView.addObject("address", sAddressDTO);
+		modelAndView.addObject("productList", productList);
+		
+		return modelAndView;
+	}
 }

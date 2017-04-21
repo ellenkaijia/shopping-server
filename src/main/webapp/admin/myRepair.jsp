@@ -31,7 +31,7 @@
 <meta name="viewport"
 	content="width=device-width, minimum-scale=1, maximum-scale=1;user-scalable=no;">
 <script charset="utf-8" src="<%= basePath %>/js/jquery.form.js?v=01291"></script>
-<title>订单列表</title>
+<title>维修列表</title>
 </head>
 <body>
 	<div class="fanhui_cou">
@@ -42,7 +42,7 @@
 	<div class="fix_nav">
 		<div class="nav_inner">
 			<a class="nav-left back-icon" href="javascript:history.back();">返回</a>
-			<div class="tit">订单列表</div>
+			<div class="tit">申请维修</div>
 		</div>
 	</div>
 	</header>
@@ -50,31 +50,40 @@
 	<div class="container" id="container2">
 		<div class="row">
 
-			<c:if test="${orders == null || fn:length(orders) <= 0}">
+			<c:if test="${repair == null || fn:length(repair) <= 0}">
 				<ul class="list-group">
-					<li><p stye="color:black; text-align:center">目前没有订单</p></li>
+					<li><p stye="color:black; text-align:center">目前没有申请过</p></li>
 				</ul>
 			</c:if>
-			<c:forEach items="${orders}" var="item" varStatus="status">
+			<c:forEach items="${repair}" var="item" varStatus="status">
 				<div class="tb_box">
 					<div class="b_type clearfix">
-						<p style="margin-left:10px; color:black">订单号 ：${item.orderId}</p>
-						<a href="<%= basePath%>/userOrderDetail/${item.orderId}">
+						<p style="margin-left:10px; color:black">维修单号 ：${item.repairId}</p>
+						<a href="">
 							<div class="hproduct clearfix"
 								style="background: #fff; border-top: 0px;">
-								<div class="p-pic">
+								<c:if test="${item.status == 0}">
+									<div class="p-pic">
 									<img style="max-height: 100px; margin: auto;"
-										class="img-responsive" src="<%= basePath %>/${item.imgUrl}">
+										class="img-responsive" src="<%= basePath %>/images/stop.png">
 								</div>
+								</c:if>
+								<c:if test="${item.status == 1}">
+									<div class="p-pic">
+									<img style="max-height: 100px; margin: auto;"
+										class="img-responsive" src="<%= basePath %>/images/yes.png">
+								</div>
+								</c:if>
+								
 								<div class="p-info">
-									<p class="p-title">${item.prodName}</p>
+									<p class="p-title">${item.userName}</p>
 									<p class="p-origin">
 										<em class="price"><span
-											style="color: black; font-size: 10px">单价</span>¥${item.prodPrize}</em>
+											style="color: black; font-size: 10px">手机：</span>${item.userPhone}</em>
 									</p>
 									<p class="p-origin">
 										<em class="price"><span
-											style="color: red; font-size: 10px">交易金额</span>¥${item.prodPrizeSum}</em>
+											style="color: red; font-size: 10px">地址：</span>¥${item.userAddress}</em>
 									</p>
 									<p class="p-origin" style="float: right">
 										<span style="color: black; font-size: 15px">${item.dateStr}</span>
@@ -82,23 +91,6 @@
 								</div>
 							</div>
 						</a>
-						<div class="tb_type tb_type_even clearfix" >
-							<c:choose>
-								<c:when test="${item.talkStatus == 0}">
-									<a href="<%= basePath %>/talk/${item.orderId}/${item.prodId}" class="tb_floor" style="top:50%;text-align:center;background-color:#000000; color:white;">
-										去评论
-									</a>
-								</c:when>
-								<c:otherwise>
-									<a class="tb_floor" style="top:50%;text-align:center;background-color:#000000; color:white;">
-										已经评论
-									</a>
-								</c:otherwise>
-							</c:choose>
-							<a href="<%= basePath %>/repair/${item.orderId}/${item.prodId}" class="tb_floor" style="top:50%;text-align:center;background-color:#FFFFFF; color:black;">
-								去保修
-							</a>
-						</div>
 					</div>
 				</div>
 			</c:forEach>

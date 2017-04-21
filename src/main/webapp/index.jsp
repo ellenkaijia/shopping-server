@@ -69,22 +69,19 @@
 							style="width: 3840px; position: relative; overflow: hidden; padding: 0px; margin: 0px; transition-duration: 200ms; transform: translateX(-768px);">
 							<li
 								style="display: table-cell; vertical-align: top; width: 768px;">
-								<a href="http://m.legendshop.cn/m_search/list?categoryId=36"
-								target="_blank"> <img src="img/scroll1.jpg" alt="电视"
+								<a href="" > <img src="img/scroll1.jpg" alt="电视"
 									ppsrc="img/scroll1.jpg">
 							</a>
 							</li>
 							<li
 								style="display: table-cell; vertical-align: top; width: 768px;">
-								<a href="http://m.legendshop.cn/m_search/list?categoryId=38"
-								target="_blank"> <img src="img/scroll2.jpg" alt="电饭煲"
+								<a href=""> <img src="img/scroll2.jpg" alt="电饭煲"
 									ppsrc="img/scroll2.jpg">
 							</a>
 							</li>
 							<li
 								style="display: table-cell; vertical-align: top; width: 768px;">
-								<a href="http://m.legendshop.cn/m_search/list?categoryId=38"
-								target="_blank"> <img src="img/scroll3.jpg" alt="电脑办公"
+								<a href=""> <img src="img/scroll3.jpg" alt="电脑办公"
 									ppsrc="img/scroll3.jpg">
 							</a>
 							</li>
@@ -666,7 +663,7 @@
 		}
 		
 		function zhuangti() {
-			
+			floatNotify.simple("最近没有活动专题");
 		}
 	</script>
 </body>

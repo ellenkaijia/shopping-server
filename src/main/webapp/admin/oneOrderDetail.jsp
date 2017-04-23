@@ -125,7 +125,7 @@
 							<ins class="deftip">默认地址</ins>
 						</div>
 						<div class="address-right">
-							<a href="../person/address.html"> <span
+							<a href="<%=basePath %>/getAddressList"> <span
 								class="am-icon-angle-right am-icon-lg"></span></a>
 						</div>
 						<div class="clear"></div>

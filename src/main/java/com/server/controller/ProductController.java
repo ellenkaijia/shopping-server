@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.server.dto.SCurentPageDTO;
 import com.server.dto.SProductLevelDTO;
+import com.server.dto.STalkShowDTO;
 import com.server.rpc.SProductMsService;
 import com.server.rpc.UserMsService;
 
@@ -51,9 +52,13 @@ public class ProductController {
 			Integer count = userMsService.getMyShopCartCount(userId);
 			modelAndView.addObject("shopCarCount", count);
 		}
+		Integer count = userMsService.getProductTalkCount(prodId);
 		SProductLevelDTO sproductDTO = spProductMsService.getProductDetail(prodId);
-		modelAndView.setViewName("/admin/views");
+		List<STalkShowDTO> talkShowDTOs = spProductMsService.getProductTalkList(prodId);
+		modelAndView.setViewName("/views");
 		modelAndView.addObject("productDetail", sproductDTO);
+		modelAndView.addObject("talkCount", count);
+		modelAndView.addObject("talkList", talkShowDTOs);
 		return modelAndView;
 	}
 	

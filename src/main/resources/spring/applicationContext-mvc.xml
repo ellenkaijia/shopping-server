@@ -71,6 +71,8 @@
    <mvc:resources location="/img/" mapping="/img/**"/>
    <mvc:resources location="/js/" mapping="/js/**"/>
    <mvc:resources location="/css/" mapping="/css/**"/>
+   <mvc:resources location="/ojs/" mapping="/ojs/**"/>
+   <mvc:resources location="/ocss/" mapping="/ocss/**"/>
    <mvc:resources location="/dist/" mapping="/dist/**"/>
    <mvc:resources location="/example/" mapping="/example/**"/>
    <mvc:resources location="/lib/" mapping="/lib/**"/>

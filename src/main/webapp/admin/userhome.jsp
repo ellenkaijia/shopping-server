@@ -125,17 +125,17 @@
 							<img src="<%= basePath%>/images/order_bg_5.png">
 						</div>
 						<p class="m_name">我的收藏</p> <span class="red">${favorCount}</span>
-					</a> <a href="<%= basePath%>/myComment" class="list-group-item col-xs-4">
+					</a> <a href="<%= basePath%>/myRepair" class="list-group-item col-xs-4">
 						<div class="m_img">
 							<img src="<%= basePath%>/images/order_bg_8.png">
 						</div>
-						<p class="m_name">我的保/微修</p> <span class="red">&nbsp;&nbsp;</span>
-					</a> <a href="<%= basePath%>/myRepair" class="list-group-item col-xs-4">
+						<p class="m_name">我的保修</p> <span class="red">&nbsp;&nbsp;</span>
+					</a> <a href="<%= basePath%>/noBuyRepair" class="list-group-item col-xs-4">
 						<div class="m_img">
 							<img src="<%= basePath%>/images/order_bg_4.png">
 						</div>
-						<p class="m_name">收件箱</p> <span class="red">&nbsp;&nbsp;</span>
-					</a> <a href="<%= basePath%>/systemInfoBox" class="list-group-item col-xs-4">
+						<p class="m_name">申请维修</p> <span class="red">&nbsp;&nbsp;</span>
+					</a> <a href="" class="list-group-item col-xs-4">
 						<div class="m_img">
 							<img src="<%= basePath%>/images/order_bg_7.png">
 						</div>

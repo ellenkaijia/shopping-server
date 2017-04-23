@@ -126,7 +126,7 @@
 							&nbsp;
 							&nbsp;
 							&nbsp;
-							<a class="am-text-danger am-text-lg" onclick="javascript:history.back()">返回</a>
+							<a class="am-text-danger am-text-lg" onclick="javascript:location.href = document.referrer">返回</a>
 						</div>
 					</div>
 					<hr />

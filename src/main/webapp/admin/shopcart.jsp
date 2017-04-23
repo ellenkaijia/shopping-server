@@ -40,7 +40,7 @@
 	<header class="header header_1">
 	<div class="fix_nav">
 		<div class="nav_inner">
-			<a class="nav-left back-icon" href="javascript:location.href = document.referrer">返回</a>
+			<a class="nav-left back-icon" href="javascript:window.location.href='${ctx}/index'">返回</a>
 			<div class="tit">购物车</div>
 		</div>
 	</div>
@@ -48,7 +48,10 @@
 	<div class="container ">
 		<div class="row rowcar">
 			<c:if test="${shopcart == null || fn:length(shopcart) <= 0}">
-				<img src="<%= basePath%>/image/3.22.gif">
+				<div id="ajax_none"
+				style="width: 300px; margin: 10px auto 15px; text-align: center;">
+				<p class="p-title"> 没有更多数据了 </p>
+				</div>
 			</c:if>
 			<c:forEach items="${shopcart}" var="item" varStatus="status">
 				<ul class="list-group">

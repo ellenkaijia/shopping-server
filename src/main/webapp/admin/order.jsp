@@ -69,12 +69,12 @@
 								<div class="p-info">
 									<p class="p-title">${item.prodName}</p>
 									<p class="p-origin">
-										<em class="price"><span
-											style="color: black; font-size: 10px">单价</span>¥${item.prodPrize}</em>
+										<span
+											style="color: black; font-size: 10px">单价</span>¥ ${item.prodPrize}
 									</p>
 									<p class="p-origin">
-										<em class="price"><span
-											style="color: red; font-size: 10px">交易金额</span>¥${item.prodPrizeSum}</em>
+										<span
+											style="color: black; font-size: 10px">交易金额 </span>¥ ${item.prodPrizeSum}
 									</p>
 									<p class="p-origin" style="float: right">
 										<span style="color: black; font-size: 15px">${item.dateStr}</span>
@@ -89,11 +89,16 @@
 										去评论
 									</a>
 								</c:when>
-								<c:otherwise>
+								<c:when test="${item.talkStatus == 2}">
+									<a class="tb_floor" style="top:50%;text-align:center;background-color:#000000; color:white;">
+										订单未完成
+									</a>
+								</c:when>
+								<c:when test="${item.talkStatus == 1}">
 									<a class="tb_floor" style="top:50%;text-align:center;background-color:#000000; color:white;">
 										已经评论
 									</a>
-								</c:otherwise>
+								</c:when>
 							</c:choose>
 							<a href="<%= basePath %>/repair/${item.orderId}/${item.prodId}" class="tb_floor" style="top:50%;text-align:center;background-color:#FFFFFF; color:black;">
 								去保修

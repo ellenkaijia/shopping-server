@@ -86,7 +86,7 @@
 		<div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" style="background: #000000; margin-left:0; margin-right:0;margin-top:0">
 			  <p class="" style="font-size:16px;color:#FFFFFF;margin-left:10px">订单详情</p>
 			  <nav class="am-titlebar-nav">
-			    <a href="javascript:location.href = document.referrer;" class="" style="font-size:16px;color:#FFFFFF">返回 &raquo;</a>
+			    <a href="javascript:history.back();" class="" style="font-size:16px;color:#FFFFFF">返回 &raquo;</a>
 			  </nav>
 		</div>
 		<!--地址 -->
@@ -122,7 +122,7 @@
 							<ins class="deftip">默认地址</ins>
 						</div>
 						<div class="address-right">
-							<a href="<%=basePath %>/getAddressList"> <span
+							<a href=""> <span
 								class="am-icon-angle-right am-icon-lg"></span></a>
 						</div>
 						<div class="clear"></div>

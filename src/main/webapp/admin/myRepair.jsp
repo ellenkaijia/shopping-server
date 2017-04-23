@@ -74,16 +74,15 @@
 										class="img-responsive" src="<%= basePath %>/images/yes.png">
 								</div>
 								</c:if>
-								
 								<div class="p-info">
 									<p class="p-title">${item.userName}</p>
 									<p class="p-origin">
-										<em class="price"><span
-											style="color: black; font-size: 10px">手机：</span>${item.userPhone}</em>
+										<span
+											style="color: black; font-size: 10px">手机：</span>${item.userPhone}
 									</p>
 									<p class="p-origin">
-										<em class="price"><span
-											style="color: red; font-size: 10px">地址：</span>¥${item.userAddress}</em>
+										<span
+											style="color: black; font-size: 10px">地址：</span>${item.userAddress}
 									</p>
 									<p class="p-origin" style="float: right">
 										<span style="color: black; font-size: 15px">${item.dateStr}</span>

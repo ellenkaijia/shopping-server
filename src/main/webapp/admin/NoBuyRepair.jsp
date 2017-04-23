@@ -50,8 +50,6 @@
 
 			<div class="am-u-md-12 am-u-lg-8" style="margin-top: 20px;">
 				<form class="am-form am-form-horizontal">
-					<input type="hidden" id="prodId" value="${prodId}">
-					<input type="hidden" id="orderId" value="${orderId}">
 					<div class="am-form-group">
 						<label for="user-name" class="am-form-label">联系人</label>
 						<div class="am-form-content">
@@ -119,25 +117,21 @@
 		var whatProblem = $("#what-problem").val();
 		var userName = $("#user-name").val();
 		var userPhone = $("#user-phone").val();
-		var prodId = $("#prodId").val();
-		var orderId = $("#orderId").val();
 		
 		var userAddress = whatProvince + whatCity + whatArea + moreAddress;
 		var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;
 		
-		if(whatProblem == "" || moreAddress == "" || userName == "" || userPhone == "" || !myreg.test(phone)) {
+		if(whatProblem == "" || moreAddress == "" || userName == "" || userPhone == "" || !myreg.test(userPhone)) {
 			 floatNotify.simple("输入有误");
 			return;
 		}
 		
 		jQuery.ajax({
-			url : '${ctx}' + "/addRepair",
+			url : '${ctx}' + "/addNoBuyRepair",
 			data : {
 				"userName" : userName,
 				"userAddress" : userAddress,
 				"userPhone" : userPhone,
-				"prodId" : prodId,
-				"orderId" : orderId,
 				"whatProblem" : whatProblem
  			},
 			type : 'post',
@@ -148,7 +142,10 @@
 			success : function(retData) {
 				if (retData.code == 0) {
 					floatNotify.simple("提交成功,请返回");
-					$("#prodId").val("");
+					$("#user-name").val("");
+					$("#user-phone").val("");
+					$("#what-problem").val("");
+					$("#user-intro").val("");
 				} else if(retData.code == -98){
 					floatNotify.simple("表单失效,请返回");
 				}

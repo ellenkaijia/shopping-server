@@ -95,6 +95,18 @@ public class IndexResController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("/viewhtml")
+	public ModelAndView viewhtml(ModelAndView modelAndView) {
+		modelAndView.setViewName("/view");
+		return modelAndView;
+	}
+	
+	@RequestMapping("/viewview")
+	public ModelAndView viewview(ModelAndView modelAndView) {
+		modelAndView.setViewName("/view.html");
+		return modelAndView;
+	}
+	
 	@RequestMapping("/getHot")
 	public ModelAndView getProductHot(ModelAndView modelAndView) {
 		modelAndView.setViewName("/admin/category_list");

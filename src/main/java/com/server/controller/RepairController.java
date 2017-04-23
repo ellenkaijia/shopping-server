@@ -48,7 +48,7 @@ public class RepairController {
 		ResultInfo resultInfo = new ResultInfo();
 		log.info("******addRepair方法，prodId={},orderId={}*****",sRepairDTO.getProdId(), sRepairDTO.getOrderId());
 		
-		if(sRepairDTO.getProdId() == null || sRepairDTO.getOrderId() == null) {
+		if(sRepairDTO.getProdId() == null || sRepairDTO.getOrderId() == null || sRepairDTO.getProdId() == "" || sRepairDTO.getOrderId() == "") {
 			resultInfo.setCode(-98);
 			resultInfo.setMessage("表单失效");
 			return resultInfo;
@@ -81,6 +81,30 @@ public class RepairController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("/noBuyRepair")
+	public ModelAndView noBuyRepair(ModelAndView modelAndView) {
+		log.info("******addNoBuyRepair填写维修页面*****");
+		modelAndView.setViewName("/admin/NoBuyRepair");
+		return modelAndView;
+	}
 	
+	@RequestMapping("/addNoBuyRepair")
+	@ResponseBody
+	public ResultInfo addNoBuyRepair(SRepairDTO sRepairDTO, HttpSession httpSession) {
+		log.info("******addNoBuyRepair填写维修页面*****");
+		ResultInfo resultInfo = new ResultInfo();
+		
+		sRepairDTO.setUserId((String)httpSession.getAttribute("userId"));
+		Integer integer = userMsService.addNoBuyRepair(sRepairDTO);
+		if(integer == 0) {
+			resultInfo.setCode(0);
+			resultInfo.setMessage("成功");
+		} else {
+			resultInfo.setCode(-99);
+			resultInfo.setMessage("失败");
+		}
+		
+		return resultInfo;
+	}
 	
 }

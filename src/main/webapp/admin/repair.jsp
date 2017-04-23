@@ -43,7 +43,7 @@
 					&nbsp;
 					&nbsp;
 					&nbsp;
-					<a class="am-text-danger am-text-lg" onclick="javascript:location.href = document.referrer">返回</a>
+					<a class="am-text-danger am-text-lg" onclick="javascript:history.back()">返回</a>
 				</div>
 			</div>
 			<hr />
@@ -125,7 +125,7 @@
 		var userAddress = whatProvince + whatCity + whatArea + moreAddress;
 		var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;
 		
-		if(whatProblem == "" || moreAddress == "" || userName == "" || userPhone == "" || !myreg.test(phone)) {
+		if(whatProblem == "" || moreAddress == "" || userName == "" || userPhone == "" || !myreg.test(userPhone)) {
 			 floatNotify.simple("输入有误");
 			return;
 		}

@@ -138,10 +138,13 @@
 							class="property">
 							<c:forEach items="${productDetail.imgUrls}" var="item"
 								varStatus="status">
-								<div
+								<div class="prop-area" style="min-height:300px;overflow: hidden;">
+								<img src="<%= basePath%>/${item}" alt="" />
+								<%-- <div
 									style="margin: 0 auto; min-height: 300px; overflow: hidden;">
 									<img style="display: inline-block" src="<%= basePath%>/${item}"
 										alt="" />
+								</div> --%>
 								</div>
 							</c:forEach>
 						</ul>
